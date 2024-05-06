@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:app_calificaciones/models/abstract_model.dart';
 
@@ -11,6 +10,7 @@ class PersonaModel extends AbstractModel<int> {
     this.nombreUsuario,
     this.correo,
     this.identificacion,
+    this.tipoIdetificacion,
     this.fechaIngreso,
     this.fechaSalida,
     this.tipo,
@@ -96,7 +96,7 @@ class PersonaModel extends AbstractModel<int> {
   }
 
   String textToNumberTipoDocumento() {
-    return tipoIdetificacion == "Cedula" ? "1" : "2";
+    return tipoIdetificacion!.toUpperCase() == "CEDULA" ? "1" : "2";
   }
 
   @override
@@ -126,6 +126,7 @@ class PersonaModel extends AbstractModel<int> {
         nombreUsuario: json["username"],
         correo: json["email"],
         identificacion: json["identificacion"],
+        tipoIdetificacion: json["tipo_identificacion"],
         fechaIngreso: DateTime.parse(json["fecha_ingreso"]),
         fechaSalida: json["fecha_salida"] != null
             ? DateTime.parse(json["fecha_salida"])
@@ -135,6 +136,6 @@ class PersonaModel extends AbstractModel<int> {
 
   @override
   String toString() {
-    return "{id: $id, nombre: $nombre, apellido: $apellido, nombreUsuario: $nombreUsuario, correo: $correo, identificacion: $identificacion, fechaIngreso: $fechaIngreso, fechaSalida: $fechaSalida, tipo: $tipo}";
+    return "{id: $id, nombre: $nombre, apellido: $apellido, nombreUsuario: $nombreUsuario, correo: $correo, tipoDoc: $tipoIdetificacion, identificacion: $identificacion, fechaIngreso: $fechaIngreso, fechaSalida: $fechaSalida, tipo: $tipo}";
   }
 }

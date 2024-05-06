@@ -2,19 +2,18 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_calificaciones/models/login_model.dart';
-import 'package:app_calificaciones/models/persona_model.dart';
-
-import '../../utils/connections.dart';
-import 'abstract_service.dart';
+import 'package:app_calificaciones/models/materia_model.dart';
+import 'package:app_calificaciones/services/remote/abstract_service.dart';
+import 'package:app_calificaciones/utils/connections.dart';
 import 'package:http/http.dart' as http;
 
-class PersonaService extends AbstractService<PersonaModel> {
+class MateriaService extends AbstractService<MateriaModel> {
   @override
-  Future<PersonaModel> create(PersonaModel object) async {
+  Future<MateriaModel> create(MateriaModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
         session.token!, session.cookies as String);
-    var request = http.Request('POST', Uri.parse(UrlAddress.funcionario));
+    var request = http.Request('POST', Uri.parse(UrlAddress.materia));
     request.body = json.encode(removeId(object));
 
     request.headers.addAll(headers);
@@ -38,11 +37,11 @@ class PersonaService extends AbstractService<PersonaModel> {
   }
 
   @override
-  Future<PersonaModel> update(PersonaModel object) async {
+  Future<MateriaModel> update(MateriaModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
         session.token!, session.cookies as String);
-    var request = http.Request('PUT', Uri.parse(UrlAddress.funcionario));
+    var request = http.Request('PUT', Uri.parse(UrlAddress.materia));
     request.body = json.encode(object);
 
     request.headers.addAll(headers);
@@ -64,19 +63,17 @@ class PersonaService extends AbstractService<PersonaModel> {
     return object;
   }
 
-  Future<bool> remove(PersonaModel object) async {
+  Future<bool> remove(MateriaModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
         session.token!, session.cookies as String);
     var request = http.Request(
       'DELETE',
-      Uri.parse("${UrlAddress.funcionario}?id=${object.id}"),
+      Uri.parse("${UrlAddress.materia}?id=${object.id}"),
     );
     request.headers.addAll(headers);
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
-    print("response: ${response.statusCode}");
-    print("response body: ${response.body}");
     if (response.statusCode == 200) {
       return true;
     } else {
@@ -85,11 +82,11 @@ class PersonaService extends AbstractService<PersonaModel> {
   }
 
   @override
-  Future<List<PersonaModel>> getAll() async {
+  Future<List<MateriaModel>> getAll() async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
         session.token!, session.cookies as String);
-    var request = http.Request('GET', Uri.parse(UrlAddress.list_funcionario));
+    var request = http.Request('GET', Uri.parse(UrlAddress.materiaList));
 
     request.headers.addAll(headers);
 
@@ -98,9 +95,33 @@ class PersonaService extends AbstractService<PersonaModel> {
     //print('cookie: $cookie');
     if (response.statusCode == 200) {
       return (jsonDecode(utf8.decode(response.bodyBytes)) as List)
-          .map((e) => PersonaModel.fromMap(e))
+          .map((e) => MateriaModel.fromMap(e))
           .toList()
-          .cast<PersonaModel>();
+          .cast<MateriaModel>();
+    } else {
+      try {
+        throw Exception("usuario");
+      } on SocketException catch (_) {
+        rethrow;
+      }
+    }
+  }
+
+  Future<List<Map>> listArea() async {
+    LoginModel? session = await localAuthRepository.getSession();
+    var headers = UrlAddress.getHeadersWithToken(
+        session.token!, session.cookies as String);
+    var request = http.Request('GET', Uri.parse(UrlAddress.listArea));
+
+    request.headers.addAll(headers);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    //print('cookie: $cookie');
+    if (response.statusCode == 200) {
+      return (jsonDecode(utf8.decode(response.bodyBytes)) as List)
+          .map((e) => Map.from(e))
+          .toList();
     } else {
       try {
         throw Exception("usuario");

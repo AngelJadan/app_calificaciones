@@ -1,6 +1,8 @@
 import 'package:app_calificaciones/controller/abstract_controller.dart';
+import 'package:app_calificaciones/models/funcionario_model.dart';
 import 'package:app_calificaciones/models/persona_model.dart';
 import 'package:app_calificaciones/services/remote/persona_service.dart';
+import 'package:app_calificaciones/views/funcionario/funcionario_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +58,7 @@ class FuncionarioController
           return Scrollbar(
               child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            child: Container(height: 700, child: child),
+            child: SizedBox(height: 700, child: child),
           ));
         },
       );
@@ -69,15 +71,86 @@ class FuncionarioController
     }
   }
 
+  int index = 0;
+  DataRow mapping(PersonaModel persona) {
+    index++;
+    return DataRow(
+      onSelectChanged: (value) {},
+      cells: [
+        DataCell(
+          Text(index.toString()),
+        ),
+        DataCell(
+          Text(persona.nombre.toString()),
+        ),
+        DataCell(
+          Text(persona.apellido.toString()),
+        ),
+        DataCell(
+          Text(persona.identificacion.toString()),
+        ),
+        DataCell(
+          Text(persona.correo.toString()),
+        ),
+        DataCell(
+          Text(
+              "${persona.fechaIngreso!.year}/${persona.fechaIngreso!.month}/${persona.fechaIngreso!.day}"),
+        ),
+        DataCell(
+          Text(persona.getTipo(persona.tipo!)),
+        ),
+        DataCell(
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  FuncionarioPage().newFuncionario(persona);
+                },
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.amber,
+                ),
+                tooltip: "Editar",
+              ),
+              IconButton(
+                onPressed: () {
+                  deleteFuncionario(persona);
+                },
+                icon: const Icon(
+                  Icons.remove_circle,
+                  color: Color.fromARGB(255, 238, 16, 0),
+                ),
+                tooltip: "Eliminar",
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   saveFuncionario() async {
+    change(null, status: RxStatus.loading());
     object.value.nombre = nombreController.text;
     object.value.apellido = apellidoController.text;
     object.value.nombreUsuario =
         "${object.value.nombre}_${object.value.apellido}";
     object.value.correo = correoController.text;
     object.value.identificacion = identificacionController.text;
-    PersonaModel newPersona = await service.create(object.value);
-    lists.add(newPersona);
+    object.value.tipoIdetificacion = documentoSeleccionado;
+    if (object.value.id == null) {
+      PersonaModel newPersona = await service.create(object.value);
+      lists.add(newPersona);
+    } else {
+      PersonaModel newPersona = await service.update(object.value);
+      lists.removeWhere((element) => element.id == newPersona.id);
+      lists.add(object.value);
+    }
+    change(lists, status: RxStatus.success());
+  }
+
+  deleteFuncionario(PersonaModel persona) async {
+    var res = await service.remove(persona);
   }
 
   getFuncionarios() async {

@@ -30,7 +30,6 @@ class SessionProvider {
   Future<LoginModel> getSession() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String data = prefs.getString("session") ?? '';
-    print("data $data");
     return LoginModel.fromMap(jsonDecode(data));
   }
 }

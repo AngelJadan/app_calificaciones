@@ -25,6 +25,7 @@ class _LoginState extends State<LoginView> {
       onChanged: (value) => loginController.loginModel.correo = value,
     );
     final passwordForm = TextFormField(
+      obscureText: true,
       decoration: const InputDecoration(
         label: Text(
           "Contraseña",

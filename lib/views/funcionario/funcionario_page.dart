@@ -1,19 +1,15 @@
-import 'dart:js';
-
-import 'package:app_calificaciones/controller/abstract_controller.dart';
 import 'package:app_calificaciones/controller/funcionario_controller.dart';
+import 'package:app_calificaciones/models/persona_model.dart';
 import 'package:app_calificaciones/router/router.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 import '../../utils/drawer.dart';
 
 class FuncionarioPage extends StatelessWidget {
+  const FuncionarioPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -48,60 +44,90 @@ class FuncionarioPage extends StatelessWidget {
                 body: Center(
                   child: controller.lists.isEmpty
                       ? const Text("Aun sin datos.")
-                      : Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(12, 4, 5, 4),
-                            child: DataTable2(
-                                columnSpacing: 12,
-                                horizontalMargin: 12,
-                                minWidth: 50,
-                                columns: const [
-                                  DataColumn(
-                                    label: Text("Nombre"),
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 4, 5, 4),
+                          child: DataTable2(
+                            columnSpacing: 12,
+                            horizontalMargin: 12,
+                            minWidth: 50,
+                            showCheckboxColumn: false,
+                            columns: const [
+                              DataColumn(
+                                label: Text(
+                                  "#",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  DataColumn(
-                                    label: Text("Apellido"),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  "Nombre",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  DataColumn(
-                                    label: Text("Correo"),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  "Apellido",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  DataColumn(
-                                    label: Text("Identificacion"),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  "Identificacion",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  DataColumn(
-                                    label: Text("Fecha ingreso"),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  "Correo",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ],
-                                rows: controller.lists
-                                    .map(
-                                      (e) => DataRow(
-                                        cells: [
-                                          DataCell(
-                                            Text(e.nombre.toString()),
-                                          ),
-                                          DataCell(
-                                            Text(e.apellido.toString()),
-                                          ),
-                                          DataCell(
-                                            Text(e.correo.toString()),
-                                          ),
-                                          DataCell(
-                                            Text(e.identificacion.toString()),
-                                          ),
-                                          DataCell(
-                                            Text(
-                                                "${e.fechaIngreso!.year}/${e.fechaIngreso!.month}/${e.fechaIngreso!.day}"),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                    .toList()),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  "Fecha ingreso",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  "Tipo de funcionario",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  "Acción",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                            rows: controller.lists
+                                .map(
+                                  (e) => controller.mapping(e),
+                                )
+                                .toList(),
                           ),
                         ),
                 ),
                 floatingActionButton: FloatingActionButton(
                   onPressed: () {
-                    newFuncionario(controller);
+                    newFuncionario(null);
                   },
                   tooltip: "Crear nuevo funcionario",
                   child: const Icon(
@@ -114,7 +140,19 @@ class FuncionarioPage extends StatelessWidget {
     );
   }
 
-  newFuncionario(FuncionarioController controller) {
+  newFuncionario(PersonaModel? funcionario) {
+    var controller = Get.find<FuncionarioController>();
+    if (funcionario != null) {
+      controller.object.value.id = funcionario.id;
+      controller.nombreController.text = funcionario.nombre.toString();
+      controller.apellidoController.text = funcionario.apellido.toString();
+      controller.selectTipoDocumento(
+          funcionario.tipoIdetificacion == "1" ? "Cedula" : "Pasaporte");
+      controller.object.value.tipo = funcionario.tipo;
+      controller.identificacionController.text = funcionario.identificacion!;
+      controller.object.value.fechaIngreso = funcionario.fechaIngreso;
+      controller.correoController.text = funcionario.correo!;
+    }
     showDialog(
       context: Get.context!,
       barrierDismissible: false,
@@ -254,13 +292,14 @@ class FuncionarioPage extends StatelessWidget {
                 } else {
                   controller.saveFuncionario();
                 }
+                Get.back();
               }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
             ),
             child: const Text(
-              "Agregar",
+              "Guardar",
               style: TextStyle(
                 color: Colors.white,
               ),

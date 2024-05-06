@@ -1,11 +1,10 @@
 import 'package:app_calificaciones/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
 
 estudiantes(BuildContext context) {
   return ExpansionTile(
-    leading: Icon(
+    leading: const Icon(
       Icons.settings,
     ),
     title: const Text(
@@ -30,14 +29,14 @@ estudiantes(BuildContext context) {
                     leading: const Icon(Icons.person_add),
                     title: const Text('Cursos'),
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, Routers.CURSO);
+                      Get.offAllNamed(Routers.CURSO);
                     },
                   ),
                   ListTile(
                     leading: const Icon(Icons.person_add),
                     title: const Text('Estudiantes'),
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, Routers.CURSO);
+                      Get.offAllNamed(Routers.ESTUDIANTE);
                     },
                   ),
                 ],

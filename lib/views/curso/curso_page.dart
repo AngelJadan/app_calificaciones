@@ -12,6 +12,8 @@ import 'package:get/get.dart';
 */
 
 class CursoPage extends StatelessWidget {
+  const CursoPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -33,7 +35,7 @@ class CursoPage extends StatelessWidget {
             : Scaffold(
                 appBar: AppBar(
                   title: IconButton(
-                    onPressed: () => Get.offAllNamed(Routers.CURSO),
+                    onPressed: () => Get.offAllNamed(Routers.HOME),
                     icon: const SizedBox(
                       width: 50,
                       child: Row(
@@ -158,7 +160,10 @@ class CursoPage extends StatelessWidget {
                                         SizedBox(
                                           width: 50,
                                           child: IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Get.toNamed(
+                                                  Routers.CURSOESTUDIANTE);
+                                            },
                                             icon: const Icon(
                                               Icons.people,
                                               color: Colors.green,
