@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:app_calificaciones/models/login_model.dart';
 import 'package:app_calificaciones/models/materia_curso_docente_model.dart';
+import 'package:app_calificaciones/models/periodo_model.dart';
 import 'package:app_calificaciones/services/remote/abstract_service.dart';
 import 'package:app_calificaciones/utils/connections.dart';
 import 'package:http/http.dart' as http;
@@ -106,6 +107,34 @@ class MateriaCursoDocenteService extends AbstractService<MateriaCursoDocente> {
     var response = await http.Response.fromStream(streamedResponse);
     if (response.statusCode == 200) {
       return (jsonDecode(utf8.decode(response.bodyBytes))['results'] as List)
+          .map((e) => MateriaCursoDocente.froMap(e))
+          .toList()
+          .cast<MateriaCursoDocente>();
+    } else {
+      try {
+        throw Exception(utf8.decode(response.bodyBytes));
+      } on SocketException catch (_) {
+        rethrow;
+      }
+    }
+  }
+
+  Future<List<MateriaCursoDocente>> listCursoToPeriodo(
+      PeriodoModel periodo) async {
+    LoginModel? session = await localAuthRepository.getSession();
+    var headers = UrlAddress.getHeadersWithToken(
+        session.token!, session.cookies as String);
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "${UrlAddress.list_materia_curso_docente_to_periodo}${periodo.id}/"));
+
+    request.headers.addAll(headers);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      return (jsonDecode(utf8.decode(response.bodyBytes)) as List)
           .map((e) => MateriaCursoDocente.froMap(e))
           .toList()
           .cast<MateriaCursoDocente>();

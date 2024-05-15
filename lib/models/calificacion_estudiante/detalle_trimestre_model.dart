@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:app_calificaciones/models/abstract_model.dart';
-import 'package:app_calificaciones/models/trimestre_cabecera_model.dart';
+import 'package:app_calificaciones/models/calificacion_estudiante/cabecera_actividad_model.dart';
+import 'package:app_calificaciones/models/calificacion_estudiante/trimestre_cabecera_model.dart';
 
 class DetalleTrimestreModel extends AbstractModel<int> {
   DetalleTrimestreModel({
@@ -25,6 +26,8 @@ class DetalleTrimestreModel extends AbstractModel<int> {
   int? tipoAporte;
   CabeceraTrimestreModel? cabeceraTrimestre;
 
+  List<CabeceraActividadModel>? cabecerasActividadIndividual;
+
   @override
   Map<String, dynamic> toJson() {
     Iterable<Map> aporte =
@@ -37,7 +40,11 @@ class DetalleTrimestreModel extends AbstractModel<int> {
     return {
       "id": id,
       "tipo_aporte": tipoAporte,
-      "cabecera_trimestre": cabeceraTrimestre!.id,
+      "cabecera_actividad": cabecerasActividadIndividual!
+          .map(
+            (e) => e.toJson(),
+          )
+          .toList(),
     };
   }
 

@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:app_calificaciones/controller/estudiante_controller.dart';
-import 'package:app_calificaciones/models/curso_model.dart';
 import 'package:app_calificaciones/models/estudiante_model.dart';
 import 'package:app_calificaciones/router/router.dart';
 import 'package:app_calificaciones/utils/drawer.dart';
@@ -230,6 +229,7 @@ class EstudiantePage extends GetResponsiveView<EstudianteController> {
             child: ElevatedButton(
               onPressed: () {
                 if (controller.formKeyCliente.currentState!.validate()) {
+                  // ignore: unrelated_type_equality_checks
                   if (controller.object.value.fechaNacimiento ==
                       controller.now) {
                     Fluttertoast.showToast(

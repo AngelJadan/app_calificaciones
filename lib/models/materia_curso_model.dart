@@ -15,9 +15,16 @@ class MateriaEstudianteModel extends AbstractModel<int> {
   @override
   Map<String, dynamic> toJson() => {
         "id": id,
-        "estudiante": estudiante,
-        "materia_curso": materiaCursoDocente,
+        "estudiante": estudiante!.id,
+        "materia_curso": materiaCursoDocente!.id,
       };
+
+  factory MateriaEstudianteModel.fromMap(Map<String, dynamic> json) =>
+      MateriaEstudianteModel(
+        id: json['id'],
+        estudiante: EstudianteModel.fromMap(json['estudiante']),
+        // materiaCursoDocente: MateriaCursoDocente.froMap(json['materia_curso']),
+      );
 
   @override
   String toString() {

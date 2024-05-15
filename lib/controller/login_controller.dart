@@ -1,7 +1,6 @@
 import 'package:app_calificaciones/models/login_model.dart';
 import 'package:app_calificaciones/router/router.dart';
 import 'package:app_calificaciones/services/remote/authentication_service.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../services/local/authentication.dart';

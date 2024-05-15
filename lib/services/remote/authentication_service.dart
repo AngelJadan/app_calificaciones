@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 
 class AuthentificacionService extends AbstractService<LoginModel> {
   Future<LoginModel> getToken(String email, String password) async {
-    LoginModel aut = LoginModel();
     var headers = UrlAddress.headers;
     var request = http.Request('POST', Uri.parse(UrlAddress.login));
     request.body = json.encode({"email": email, "password": password});

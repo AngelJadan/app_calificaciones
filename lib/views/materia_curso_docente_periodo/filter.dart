@@ -19,12 +19,12 @@ filter() {
           },
           onSelected: (String value) {},
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(5),
             ),
-            child: Text('Selecciona una opción'),
+            child: const Text('Selecciona una opción'),
           ),
         ),
       ),

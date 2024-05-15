@@ -1,9 +1,7 @@
 import 'package:app_calificaciones/controller/abstract_controller.dart';
 import 'package:app_calificaciones/models/materia_model.dart';
 import 'package:app_calificaciones/services/remote/materia_service.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:motion_toast/motion_toast.dart';
 
 class MateriaController
     extends AbstractController<MateriaService, MateriaModel> {

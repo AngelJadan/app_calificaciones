@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:app_calificaciones/models/login_model.dart';
 import 'package:app_calificaciones/models/persona_model.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../utils/connections.dart';
 import 'abstract_service.dart';
@@ -75,8 +76,10 @@ class PersonaService extends AbstractService<PersonaModel> {
     request.headers.addAll(headers);
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
-    print("response: ${response.statusCode}");
-    print("response body: ${response.body}");
+    if (kDebugMode) {
+      print("response: ${response.statusCode}");
+      print("response body: ${response.body}");
+    }
     if (response.statusCode == 200) {
       return true;
     } else {

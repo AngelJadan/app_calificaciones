@@ -1,4 +1,6 @@
 import 'package:app_calificaciones/controller/curso_controller.dart';
+import 'package:app_calificaciones/controller/curso_estudiante_controller.dart';
+import 'package:app_calificaciones/controller/curso_periodo_controller.dart';
 import 'package:app_calificaciones/controller/estudiante_controller.dart';
 import 'package:app_calificaciones/controller/funcionario_controller.dart';
 import 'package:app_calificaciones/controller/home_controller.dart';
@@ -7,6 +9,7 @@ import 'package:app_calificaciones/controller/materia_curso_docente_controller.d
 import 'package:app_calificaciones/controller/periodo_controller.dart';
 import 'package:app_calificaciones/services/remote/estudiante_service.dart';
 import 'package:app_calificaciones/services/remote/materia_curso_docente_service.dart';
+import 'package:app_calificaciones/services/remote/materia_estudiante_service.dart';
 import 'package:app_calificaciones/services/remote/materia_service.dart';
 import 'package:app_calificaciones/services/remote/periodo_service.dart';
 import 'package:app_calificaciones/services/remote/persona_service.dart';
@@ -36,5 +39,10 @@ class Injection {
 
     Get.lazyPut(() => MateriaCursoDocenteController());
     Get.lazyPut(() => MateriaCursoDocenteService());
+
+    Get.lazyPut(() => CursoEstudianteController());
+    Get.lazyPut(() => MateriaEstudianteService());
+
+    Get.lazyPut(() => CursoPeriodoController());
   }
 }

@@ -25,6 +25,7 @@ class CursoController extends AbstractController<CursoService, CursoModel> {
     init();
   }
 
+  @override
   init() async {
     loading.value = true;
     await getCursos();

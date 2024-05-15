@@ -1,9 +1,9 @@
 import 'package:app_calificaciones/controller/abstract_controller.dart';
 import 'package:app_calificaciones/models/curso_model.dart';
 import 'package:app_calificaciones/models/estudiante_model.dart';
-import 'package:app_calificaciones/services/remote/curso_service.dart';
 import 'package:app_calificaciones/services/remote/estudiante_service.dart';
 import 'package:app_calificaciones/views/estudiante/estudiante_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -26,6 +26,7 @@ class EstudianteController
     init();
   }
 
+  @override
   init() async {
     try {
       change(null, status: RxStatus.loading());
@@ -113,7 +114,9 @@ class EstudianteController
         object.value.fechaNacimiento = pickedInitDate;
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 

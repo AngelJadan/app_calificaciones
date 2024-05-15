@@ -1,5 +1,3 @@
-import 'package:app_calificaciones/controller/home_controller.dart';
-import 'package:app_calificaciones/models/login_model.dart';
 import 'package:app_calificaciones/router/router.dart';
 import 'package:app_calificaciones/utils/injection.dart';
 import 'package:app_calificaciones/utils/intems_drawer.dart';
@@ -164,12 +162,27 @@ getMenuGridHome(BuildContext context) {
               children: [
                 IconButton(
                   onPressed: () {
-                    Get.toNamed(Routers.MATERIACURSODOCENTE);
+                    Get.toNamed(Routers.PERIODOCURSO);
                   },
                   icon: const Icon(Icons.settings_applications),
                   iconSize: (width * 0.1) / 4,
                 ),
                 const Text("Materias de periodos")
+              ],
+            ),
+          ),
+          SizedBox(
+            width: (width - 50) / 4,
+            child: Column(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Get.toNamed(Routers.MATERIACURSODOCENTE);
+                  },
+                  icon: const Icon(Icons.settings_accessibility),
+                  iconSize: (width * 0.1) / 4,
+                ),
+                const Text("Materias estudiantes.")
               ],
             ),
           ),

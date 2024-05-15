@@ -10,4 +10,5 @@ class Routers {
   static const String ESTUDIANTE = "/estudiante";
   static const String PERIODO = "/periodo";
   static const String MATERIACURSODOCENTE = "/materia-curso-docente";
+  static const String PERIODOCURSO = "/curso-periodo";
 }

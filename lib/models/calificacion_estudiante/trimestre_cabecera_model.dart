@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_calificaciones/models/abstract_model.dart';
+import 'package:app_calificaciones/models/calificacion_estudiante/detalle_actividad_model.dart';
 import 'package:app_calificaciones/models/materia_curso_model.dart';
 
 class CabeceraTrimestreModel extends AbstractModel<int> {
@@ -35,20 +36,50 @@ class CabeceraTrimestreModel extends AbstractModel<int> {
   MateriaEstudianteModel? materiaEstudiante;
   int? aporteCualitativo;
   int? cualitativoProyectoIntegrador;
+  List<DetalleActividadModel>? actividades;
+
+  validarNumeroTrimestre() {
+    numeroTrimestre == null
+        ? throw Exception({"numeroTrimestre": "No puede ser nulo"})
+        : null;
+    numeroTrimestre! > 2
+        ? throw Exception(
+            {"numeroTrimestre": "No puede existir mas de 2 trimestres"})
+        : null;
+  }
+
+  validarActividades() {
+    if (actividades == null) {
+      throw Exception({"actividades": "No puede ser nulo"});
+    }
+    if (actividades!.length > 2) {
+      throw Exception(
+          {"actividades": "No pueden existir mas de 2 actividades"});
+    }
+  }
+
+  DetalleActividadModel getActividad(
+      List<DetalleActividadModel> actividades, int actividad) {
+    return actividades.where((element) => element.nombre == actividad).first;
+  }
 
   @override
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "numero_trimestre": numeroTrimestre,
-        "materia_estudiante": materiaEstudiante!.id,
-        "aporte_cualitativo": (calificacion
-            .where((element) => element['id'] == aporteCualitativo)
-            .first)['id'],
-        "proyecto_integrador": cualitativoProyectoIntegrador,
-        "cualitativo_proyecto_integrador": (calificacion
-            .where((element) => element['id'] == cualitativoProyectoIntegrador)
-            .first)['id'],
-      };
+  Map<String, dynamic> toJson() {
+    validarNumeroTrimestre();
+    validarActividades();
+    return {
+      "id": id,
+      "numero_trimestre": numeroTrimestre,
+      "materia_estudiante": materiaEstudiante!.id,
+      "aporte_cualitativo": (calificacion
+          .where((element) => element['id'] == aporteCualitativo)
+          .first)['id'],
+      "proyecto_integrador": (calificacion
+          .where((element) => element['id'] == cualitativoProyectoIntegrador)
+          .first)['id'],
+      "detalle_trimestre": actividades!.map((e) => e.toJson()).toList(),
+    };
+  }
 
   Map getCalificacion(int id) =>
       calificacion.where((element) => element['id'] == id).first;

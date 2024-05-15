@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:app_calificaciones/models/abstract_model.dart';
-import 'package:app_calificaciones/models/detalle_trimestre_model.dart';
+import 'package:app_calificaciones/models/calificacion_estudiante/detalle_actividad_model.dart';
+import 'package:app_calificaciones/models/calificacion_estudiante/detalle_trimestre_model.dart';
 
 class CabeceraActividadModel extends AbstractModel<int> {
   CabeceraActividadModel({
@@ -41,8 +42,22 @@ class CabeceraActividadModel extends AbstractModel<int> {
   int? nombre;
   DetalleTrimestreModel? detalleTrimestre;
   int? usuario;
+  List<DetalleActividadModel>? detalleActividad;
+
+  void validarCantidadDetalleActividad() {
+    if (detalleActividad == null) {
+      throw Exception({"detalleActividad": "La lista no puede ser nula"});
+    }
+    if (detalleActividad!.length > 3) {
+      throw Exception(
+          {"detalleActividad": "No se puede tener mas de 3 actividades"});
+    }
+  }
 
   void validarActividad() {
+    if (detalleTrimestre == null) {
+      throw Exception({"detalleTrimestre": "Valor nulo"});
+    }
     if (listNombre.where((element) => element['id'] == nombre).isEmpty) {
       throw Exception({"nombre": "El nombre de la actividad no existe"});
     }
@@ -51,10 +66,11 @@ class CabeceraActividadModel extends AbstractModel<int> {
   @override
   Map<String, dynamic> toJson() {
     validarActividad();
+    validarCantidadDetalleActividad();
     return {
       "id": id,
       "nombre": nombre,
-      "detalle_trimestre": detalleTrimestre!.id,
+      "detalle_actividad": detalleActividad!.map((e) => e.toJson()).toList(),
       "usuario": usuario,
     };
   }

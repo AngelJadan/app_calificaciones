@@ -16,6 +16,8 @@ class EstudianteModel extends PersonaModel {
 
   DateTime? fechaNacimiento;
 
+  get name => null;
+
   @override
   Map<String, dynamic> toJson() => {
         "id": id,

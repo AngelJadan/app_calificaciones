@@ -1,6 +1,7 @@
 import 'package:app_calificaciones/controller/abstract_controller.dart';
 import 'package:app_calificaciones/models/periodo_model.dart';
 import 'package:app_calificaciones/services/remote/periodo_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motion_toast/motion_toast.dart';
@@ -59,7 +60,9 @@ class PeriodoController
         object.value.inicioPeriodo = pickedInitDate;
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -92,7 +95,9 @@ class PeriodoController
         object.value.cierrePeriodo = pickedInitDate;
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -110,7 +115,9 @@ class PeriodoController
   }
 
   viewEdit({PeriodoModel? periodoModel}) {
-    print("periodo ${periodoModel.toString()}");
+    if (kDebugMode) {
+      print("periodo ${periodoModel.toString()}");
+    }
     setObject(periodoModel?.id);
     if (periodoModel == null) {
       object.value.inicioPeriodo = now.value;
@@ -121,9 +128,9 @@ class PeriodoController
         text: object.value.periodo != null
             ? object.value.periodo.toString()
             : "");
-    RxBool _abierto = true.obs;
+    RxBool abierto = true.obs;
     object.value.periodoAbierto != null
-        ? _abierto.value = object.value.periodoAbierto!
+        ? abierto.value = object.value.periodoAbierto!
         : null;
 
     Get.defaultDialog(
@@ -154,20 +161,20 @@ class PeriodoController
                 width: 200,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    if (_abierto.value) {
-                      _abierto.value = false;
+                    if (abierto.value) {
+                      abierto.value = false;
                       object.value.periodoAbierto = false;
                     } else {
-                      _abierto.value = true;
+                      abierto.value = true;
                       object.value.periodoAbierto = true;
                     }
                   },
                   icon: Obx(
                     () => Icon(
-                      _abierto.value
+                      abierto.value
                           ? Icons.check_box
                           : Icons.check_box_outline_blank,
-                      color: _abierto.value ? Colors.green : Colors.red,
+                      color: abierto.value ? Colors.green : Colors.red,
                     ),
                   ),
                   label: const Text("Periodo abierto"),

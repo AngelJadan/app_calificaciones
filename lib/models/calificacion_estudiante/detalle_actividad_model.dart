@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_calificaciones/models/abstract_model.dart';
-import 'package:app_calificaciones/models/cabecera_actividad_model.dart';
+import 'package:app_calificaciones/models/calificacion_estudiante/cabecera_actividad_model.dart';
 
 class DetalleActividadModel extends AbstractModel<int> {
   DetalleActividadModel({
@@ -22,6 +22,14 @@ class DetalleActividadModel extends AbstractModel<int> {
     },
     {
       "id": 2,
+      "descripcion": "LECCION ESCRITA DE LAS PARTES ORACION",
+    },
+    {
+      "id": 3,
+      "descripcion": "",
+    },
+    {
+      "id": 4,
       "descripcion": "CUALITATIVO",
     },
   ];

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_calificaciones/models/login_model.dart';
 import 'package:app_calificaciones/services/local/authentication.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -22,12 +23,16 @@ class HomeController extends GetxController {
   }
 
   getSession() async {
-    print("inicio get session");
+    if (kDebugMode) {
+      print("inicio get session");
+    }
     sessionProvider.getSession();
     loginModel = await sessionProvider.getSession();
 
     loading.value = false;
     update();
-    print("inicio session");
+    if (kDebugMode) {
+      print("inicio session");
+    }
   }
 }

@@ -1,5 +1,7 @@
 import 'package:app_calificaciones/models/abstract_model.dart';
 import 'package:app_calificaciones/models/curso_model.dart';
+import 'package:app_calificaciones/models/estudiante_model.dart';
+import 'package:app_calificaciones/models/materia_curso_model.dart';
 import 'package:app_calificaciones/models/materia_model.dart';
 import 'package:app_calificaciones/models/periodo_model.dart';
 import 'package:app_calificaciones/models/persona_model.dart';
@@ -11,12 +13,14 @@ class MateriaCursoDocente extends AbstractModel<int> {
     this.materia,
     this.periodo,
     this.docente,
+    this.estudiantes,
   }) : super(id);
 
   CursoModel? curso;
   MateriaModel? materia;
   PeriodoModel? periodo;
   PersonaModel? docente;
+  List<MateriaEstudianteModel>? estudiantes;
 
   @override
   Map<String, dynamic> toJson() => {
@@ -34,6 +38,9 @@ class MateriaCursoDocente extends AbstractModel<int> {
         materia: MateriaModel.fromMap(json['materia']),
         periodo: PeriodoModel.fromMap(json['periodo_lectivo']),
         docente: PersonaModel.fromMap(json['docente']),
+        estudiantes: (json['materia_curso'] as List)
+            .map((e) => MateriaEstudianteModel.fromMap(e))
+            .toList(),
       );
 
   @override

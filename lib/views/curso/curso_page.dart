@@ -97,6 +97,7 @@ class CursoPage extends StatelessWidget {
                                         SizedBox(
                                           width: 120,
                                           child: Text(
+                                              // ignore: unrelated_type_equality_checks
                                               controller.cursos[index].nivel ==
                                                       1
                                                   ? "Educacion basica general"
@@ -157,20 +158,6 @@ class CursoPage extends StatelessWidget {
                                             tooltip: "Eliminar",
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: 50,
-                                          child: IconButton(
-                                            onPressed: () {
-                                              Get.toNamed(
-                                                  Routers.CURSOESTUDIANTE);
-                                            },
-                                            icon: const Icon(
-                                              Icons.people,
-                                              color: Colors.green,
-                                            ),
-                                            tooltip: "Estudiantes",
-                                          ),
-                                        )
                                       ],
                                     ),
                                   ],
@@ -252,17 +239,6 @@ class CursoPage extends StatelessWidget {
                                           tooltip: "Eliminar",
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: 50,
-                                        child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.people,
-                                            color: Colors.green,
-                                          ),
-                                          tooltip: "Estudiantes",
-                                        ),
-                                      )
                                     ],
                                   ),
                                 );

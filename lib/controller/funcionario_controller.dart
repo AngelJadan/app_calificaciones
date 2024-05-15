@@ -1,8 +1,8 @@
 import 'package:app_calificaciones/controller/abstract_controller.dart';
-import 'package:app_calificaciones/models/funcionario_model.dart';
 import 'package:app_calificaciones/models/persona_model.dart';
 import 'package:app_calificaciones/services/remote/persona_service.dart';
 import 'package:app_calificaciones/views/funcionario/funcionario_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,6 +30,7 @@ class FuncionarioController
     init();
   }
 
+  @override
   init() async {
     loading = false;
     setObject(null);
@@ -63,11 +64,14 @@ class FuncionarioController
         },
       );
 
+      // ignore: unrelated_type_equality_checks
       if (pickedInitDate != null && pickedInitDate != now) {
         now.value = pickedInitDate;
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -104,7 +108,7 @@ class FuncionarioController
             children: [
               IconButton(
                 onPressed: () {
-                  FuncionarioPage().newFuncionario(persona);
+                  const FuncionarioPage().newFuncionario(persona);
                 },
                 icon: const Icon(
                   Icons.edit,
@@ -151,6 +155,9 @@ class FuncionarioController
 
   deleteFuncionario(PersonaModel persona) async {
     var res = await service.remove(persona);
+    if (kDebugMode) {
+      print("res $res");
+    }
   }
 
   getFuncionarios() async {

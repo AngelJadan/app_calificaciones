@@ -4,17 +4,14 @@ import 'package:app_calificaciones/router/pages.dart';
 import 'package:app_calificaciones/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-
 import 'utils/injection.dart';
 
 void main() {
-  runApp(AppCalificaciones());
+  runApp(const AppCalificaciones());
 }
 
 class AppCalificaciones extends StatelessWidget {
-  AppCalificaciones({Key? key}) : super(key: key);
+  const AppCalificaciones({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -26,7 +23,7 @@ class AppCalificaciones extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "Georgia",
       ),
-      home: LoginView(),
+      home: const LoginView(),
       getPages: Pages.pages,
       locale: Get.deviceLocale,
     );
