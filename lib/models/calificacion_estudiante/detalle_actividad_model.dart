@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:app_calificaciones/models/abstract_model.dart';
 import 'package:app_calificaciones/models/calificacion_estudiante/cabecera_actividad_model.dart';
+import 'package:flutter/material.dart';
 
 class DetalleActividadModel extends AbstractModel<int> {
   DetalleActividadModel({
@@ -69,14 +70,14 @@ class DetalleActividadModel extends AbstractModel<int> {
   factory DetalleActividadModel.fromJson(String str) =>
       DetalleActividadModel.fromMap(json.decode(str));
 
-  factory DetalleActividadModel.fromMap(Map<String, dynamic> json) =>
-      DetalleActividadModel(
-        id: json['id'],
-        nombre: json['nombre'],
-        calificacion: json['calificacion'],
-        cabeceraActividadModel:
-            CabeceraActividadModel.fromMap(json['cabecera_actividad']),
-      );
+  factory DetalleActividadModel.fromMap(Map<String, dynamic> json) {
+    debugPrint("detalleActividadModel: $json");
+    return DetalleActividadModel(
+      id: json['id'],
+      nombre: int.parse(json['nombre']),
+      calificacion: json['calificacion'],
+    );
+  }
 
   @override
   String toString() {

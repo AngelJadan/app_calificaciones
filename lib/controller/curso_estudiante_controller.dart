@@ -1,4 +1,5 @@
 import 'package:app_calificaciones/controller/abstract_controller.dart';
+import 'package:app_calificaciones/models/calificacion_estudiante/estudiante_materia_models.dart';
 import 'package:app_calificaciones/models/estudiante_model.dart';
 import 'package:app_calificaciones/models/materia_curso_docente_model.dart';
 import 'package:app_calificaciones/models/materia_curso_model.dart';
@@ -15,13 +16,14 @@ class CursoEstudianteController extends AbstractController<
 
   final serviceEstudiante = Get.find<EstudianteService>();
   MateriaCursoDocente? materiaCursoDocente;
+  EstudianteMateriaModel? estudianteMateria;
   final args = Get.arguments;
 
   List<EstudianteModel> estudiantes = [];
 
   final List<PlutoColumn> columns = [];
   final List<PlutoColumnGroup> columnGroup = [];
-  final List<PlutoRow> rows = [];
+  List<PlutoRow> rows = [];
 
   final Color backgroundLecciones = Colors.amber;
   final Color backgroundPruebas = Colors.green;
@@ -43,32 +45,27 @@ class CursoEstudianteController extends AbstractController<
     if (args != null) {
       final arguments = Get.arguments as Map<String, dynamic>;
       if (kDebugMode) {
-        print("arguments: $arguments");
-      }
-      if (kDebugMode) {
-        print("arguments $arguments");
-      }
+        //print("arguments $arguments");
+        //debugPrint("arguments['curso'] ${arguments['curso']}");
+        lists = await service.getMateriaEstudiante(arguments['curso'].id);
+        debugPrint("lists: $lists");
+        rows = getRows();
+        //print("lists: $lists");
 
+        if (kDebugMode) {
+          print("curso: $materiaCursoDocente");
+        }
+      }
       materiaCursoDocente = arguments['curso'];
-      if (kDebugMode) {
-        print("curso: $materiaCursoDocente");
-      }
+
       setObject(null);
-      if (materiaCursoDocente != null) {
-        await getEstudiantesCurso();
-        await getAllEstudiantes();
-      }
     }
     addPlutoGroup();
     change(lists, status: RxStatus.success());
   }
 
   getEstudiantesCurso() async {
-    lists = await service.getMateriaEstudiante(materiaCursoDocente!.curso!);
-  }
-
-  getAllEstudiantes() async {
-    estudiantes = await serviceEstudiante.getAll();
+    //lists = await service.getMateriaEstudiante(materiaCursoDocente!.curso!);
   }
 
   save(MateriaEstudianteModel object) async {
@@ -572,5 +569,171 @@ class CursoEstudianteController extends AbstractController<
           backgroundColor: backgroundTareas,
           type: PlutoColumnType.text()),
     ]);
+  }
+
+  List<PlutoRow> getRows() {
+    return lists
+        .map(
+          (e) => PlutoRow(
+            cells: {
+              "nomina": PlutoCell(
+                  value: "${e.estudiante!.nombre} ${e.estudiante!.apellido}"),
+              "leccion1": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e.trimestres!.first
+                              .getAporteIndividual()
+                              .getLecciones()
+                              .getLeccion(1)
+                              .calificacion
+                          : 0),
+              "leccion2": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteIndividual()
+                              .getLecciones()
+                              .getLeccion(2)
+                              .calificacion
+                          : 0),
+              "leccion3": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteIndividual()
+                              .getLecciones()
+                              .getLeccion(3)
+                              .calificacion
+                          : 0),
+              "leccion_cualitativo": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteIndividual()
+                              .getLecciones()
+                              .getLeccion(4)
+                              .calificacion
+                          : 0),
+              "prueba1": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteIndividual()
+                              .getPruebas()
+                              .getPrueba(1)
+                              .calificacion
+                          : 0),
+              "prueba2": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteIndividual()
+                              .getPruebas()
+                              .getPrueba(2)
+                              .calificacion
+                          : 0),
+              "prueba3": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteIndividual()
+                              .getPruebas()
+                              .getPrueba(3)
+                              .calificacion
+                          : 0),
+              "prueba_cualitativo": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteIndividual()
+                              .getPruebas()
+                              .getPrueba(4)
+                              .calificacion
+                          : 0),
+              "tarea1": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteIndividual()
+                              .getTareas()
+                              .getTarea(1)
+                              .calificacion
+                          : 0),
+              "tarea2": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteIndividual()
+                              .getTareas()
+                              .getTarea(2)
+                              .calificacion
+                          : 0),
+              "tarea3": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteIndividual()
+                              .getTareas()
+                              .getTarea(3)
+                              .calificacion
+                          : 0),
+              "tarea_cualitativo": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteIndividual()
+                              .getTareas()
+                              .getTarea(4)
+                              .calificacion
+                          : 0),
+              "proyecto1": PlutoCell(
+                  value: e.trimestres == null
+                      ? 0
+                      : e.trimestres!.isNotEmpty
+                          ? e
+                              .getPrimerTrimestre()
+                              .getAporteGrupal()
+                              .getProyectos()
+                              .getProyecto1(1)
+                              .calificacion
+                          : 0),
+              "proyecto2": PlutoCell(value: ""),
+              "proyecto3": PlutoCell(value: ""),
+              "proyecto_cualitativo": PlutoCell(value: ""),
+              "exposicion1": PlutoCell(value: ""),
+              "exposicion2": PlutoCell(value: ""),
+              "exposicion3": PlutoCell(value: ""),
+              "exposicion_cualitativo": PlutoCell(value: ""),
+              "taller1": PlutoCell(value: ""),
+              "taller2": PlutoCell(value: ""),
+              "taller3": PlutoCell(value: ""),
+              "taller_cualitativo": PlutoCell(value: ""),
+            },
+          ),
+        )
+        .toList();
   }
 }

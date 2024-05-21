@@ -1,6 +1,5 @@
 import 'package:app_calificaciones/models/abstract_model.dart';
 import 'package:app_calificaciones/models/curso_model.dart';
-import 'package:app_calificaciones/models/estudiante_model.dart';
 import 'package:app_calificaciones/models/materia_curso_model.dart';
 import 'package:app_calificaciones/models/materia_model.dart';
 import 'package:app_calificaciones/models/periodo_model.dart';

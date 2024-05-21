@@ -5,7 +5,6 @@ import 'package:app_calificaciones/router/router.dart';
 import 'package:app_calificaciones/utils/drawer.dart';
 import 'package:app_calificaciones/utils/injection.dart';
 import 'package:app_calificaciones/views/curso_estudiante/calificaciones_page.dart';
-import 'package:app_calificaciones/views/curso_estudiante/view_curso_estudiante_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -65,15 +64,6 @@ class CursoEstudiantePage extends StatelessWidget {
             onEmpty: const Text("Sin datos"),
             onError: (error) => Text("ERROR: $error"),
           ),
-        ),
-        floatingActionButton: IconButton.filled(
-          onPressed: () {
-            viewCursoEstudiante(null, controller, context);
-          },
-          icon: const Icon(
-            Icons.add,
-          ),
-          tooltip: "Crear",
         ),
       ),
     );

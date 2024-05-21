@@ -13,7 +13,6 @@ import 'package:app_calificaciones/services/remote/materia_estudiante_service.da
 import 'package:app_calificaciones/services/remote/materia_service.dart';
 import 'package:app_calificaciones/services/remote/periodo_service.dart';
 import 'package:app_calificaciones/services/remote/persona_service.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class MateriaCursoDocenteController extends AbstractController<

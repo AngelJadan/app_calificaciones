@@ -3,7 +3,6 @@ import 'package:app_calificaciones/models/materia_curso_docente_model.dart';
 import 'package:app_calificaciones/models/periodo_model.dart';
 import 'package:app_calificaciones/services/remote/materia_curso_docente_service.dart';
 import 'package:app_calificaciones/services/remote/periodo_service.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class CursoPeriodoController extends AbstractController<

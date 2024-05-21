@@ -51,7 +51,7 @@ class UrlAddress {
       "$_url/curso/list-materia-curso-docente-periodo/";
 
   static String materia_estudiante = "$_url/calificacion/materia-estudiante/";
-  static String curso_estudiante = "$_url/calificacion/list-curso-estudiante/";
+  static String curso_estudiante = "$_url/calificacion/curso-materia/";
 
   static String trimestre_estudiante = "$_url/calificacion/cabecera-trimestre/";
   static String list_estudiante_trimeste =

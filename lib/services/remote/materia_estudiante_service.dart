@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app_calificaciones/models/curso_model.dart';
 import 'package:app_calificaciones/models/login_model.dart';
 import 'package:app_calificaciones/models/materia_curso_model.dart';
 import 'package:app_calificaciones/services/remote/abstract_service.dart';
@@ -91,48 +90,23 @@ class MateriaEstudianteService extends AbstractService<MateriaEstudianteModel> {
   }
 
   Future<List<MateriaEstudianteModel>> getMateriaEstudiante(
-      CursoModel curso) async {
+      int materiaCursoDocente) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
         session.token!, session.cookies as String);
-    var request = http.Request(
-        'GET', Uri.parse("${UrlAddress.curso_estudiante}${curso.id}/"));
+    var request = http.Request('GET',
+        Uri.parse("${UrlAddress.curso_estudiante}$materiaCursoDocente/"));
 
     request.headers.addAll(headers);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
-    if (kDebugMode) {}
-    if (response.statusCode == 200) {
-      return (jsonDecode(utf8.decode(response.bodyBytes))['results'] as List)
-          .map((e) => MateriaEstudianteModel.fromMap(e))
-          .toList()
-          .cast<MateriaEstudianteModel>();
-    } else {
-      try {
-        throw Exception("usuario");
-      } on SocketException catch (_) {
-        rethrow;
-      }
-    }
-  }
-
-  Future<List<MateriaEstudianteModel>> getCursoEstudiantes() async {
-    LoginModel? session = await localAuthRepository.getSession();
-    var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
-    var request = http.Request('GET', Uri.parse(UrlAddress.curso_estudiante));
-
-    request.headers.addAll(headers);
-
-    var streamedResponse = await request.send();
-    var response = await http.Response.fromStream(streamedResponse);
-    //print('cookie: $cookie');
+    //debugPrint("response ${response.body}");
+    //debugPrint("********************************");
     if (response.statusCode == 200) {
       return (jsonDecode(utf8.decode(response.bodyBytes)) as List)
-          .map((e) => MateriaEstudianteModel.fromMap(e))
-          .toList()
-          .cast<MateriaEstudianteModel>();
+          .map((e) => MateriaEstudianteModel.fromMapTrimestres(e))
+          .toList();
     } else {
       try {
         throw Exception("usuario");
