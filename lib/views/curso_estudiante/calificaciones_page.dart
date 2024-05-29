@@ -22,15 +22,21 @@ Widget viewDataCalificaciones(
             columnGroups: controller.columnGroup,
             columns: controller.columns,
             rows: controller.rows,
-            onChanged: (PlutoGridOnChangedEvent event) {
+            onLoaded: (PlutoGridOnLoadedEvent event) {
+              controller.stateManager = event.stateManager;
               if (kDebugMode) {
-                print("event onchanged: $event");
+                debugPrint("event loaded: $event");
               }
             },
-            onLoaded: (PlutoGridOnLoadedEvent event) {
-              if (kDebugMode) {
-                print("event loaded: $event");
-              }
+            onChanged: (PlutoGridOnChangedEvent event) {
+              debugPrint("event: $event, columnIdx: ${event.columnIdx}");
+              var columnIndex = event.columnIdx;
+              var rowIndex = event.rowIdx;
+              debugPrint(
+                  "columnIndex: $columnIndex, RowIndex: $rowIndex, value: ${event.value}");
+              //debugPrint("dataColumn: $dataColumn");
+              controller.setNewCalificacion(
+                  columnIndex, rowIndex, event.value, context);
             },
           ),
           onLoading: const CircularProgressIndicator(),

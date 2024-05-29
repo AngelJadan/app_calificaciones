@@ -55,7 +55,32 @@ class CursoEstudiantePage extends StatelessWidget {
                                   )
                                 : const Text(""))
                         : const Text(""),
-                    viewDataCalificaciones(controller, context)
+                    viewDataCalificaciones(controller, context),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            // ignore: invalid_use_of_protected_member
+                            controller.change(controller.lists,
+                                status: RxStatus.loading());
+                            controller.getTrimestre();
+                            for (var estudiante in controller.lists) {
+                              for (var trimestre in estudiante.trimestres!) {
+                                if (trimestre.detalleCalificacion!.isNotEmpty) {
+                                  await controller.saveCalificacion(trimestre);
+                                }
+                              }
+                            }
+                            //ignore: invalid_use_of_protected_member
+                            controller.change(controller.lists,
+                                status: RxStatus.success());
+                          },
+                          child: const Text("Guardar"),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

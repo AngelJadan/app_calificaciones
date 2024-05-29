@@ -13,6 +13,7 @@ import 'package:app_calificaciones/services/remote/materia_estudiante_service.da
 import 'package:app_calificaciones/services/remote/materia_service.dart';
 import 'package:app_calificaciones/services/remote/periodo_service.dart';
 import 'package:app_calificaciones/services/remote/persona_service.dart';
+import 'package:app_calificaciones/services/remote/trimestre_service.dart';
 import 'package:get/get.dart';
 
 import '../controller/login_controller.dart';
@@ -44,5 +45,7 @@ class Injection {
     Get.lazyPut(() => MateriaEstudianteService());
 
     Get.lazyPut(() => CursoPeriodoController());
+
+    Get.lazyPut(() => TrimestreService());
   }
 }

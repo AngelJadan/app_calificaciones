@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 class UrlAddress {
+  // ignore: prefer_final_fields
   //static String _url = "http://192.168.100.68:8000";
   // ignore: prefer_final_fields
   static String _url = "http://192.168.10.241:8000"; //Oficina
@@ -51,6 +52,7 @@ class UrlAddress {
       "$_url/curso/list-materia-curso-docente-periodo/";
 
   static String materia_estudiante = "$_url/calificacion/materia-estudiante/";
+  static String estudiante_trimestre = "$_url/calificacion/trimestre/";
   static String curso_estudiante = "$_url/calificacion/curso-materia/";
 
   static String trimestre_estudiante = "$_url/calificacion/cabecera-trimestre/";

@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_calificaciones/models/abstract_model.dart';
-import 'package:app_calificaciones/models/calificacion_estudiante/detalle_actividad_model.dart';
-import 'package:app_calificaciones/models/calificacion_estudiante/detalle_trimestre_model.dart';
+import 'package:app_calificaciones/models/calificacion_estudiante/trimestre_detalle_calificacion.dart';
 import 'package:app_calificaciones/models/materia_curso_model.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,8 @@ class CabeceraTrimestreModel extends AbstractModel<int> {
     this.aporteCualitativo,
     this.proyectoIntegrador,
     this.cualitativoProyectoIntegrador,
-    this.detalleTrimestre,
+    this.detalleCalificacion,
+    this.usuario,
   }) : super(id);
 
   List<Map> calificacion = [
@@ -41,7 +41,18 @@ class CabeceraTrimestreModel extends AbstractModel<int> {
   int? aporteCualitativo;
   int? proyectoIntegrador;
   int? cualitativoProyectoIntegrador;
-  List<DetalleTrimestreModel>? detalleTrimestre;
+  List<TrimestreDetalleCalificacion>? detalleCalificacion;
+  int? usuario;
+
+  updateCalificacion(TrimestreDetalleCalificacion oldDetalleCalificacion,
+      TrimestreDetalleCalificacion newDetalleCalificacion) {
+    detalleCalificacion?.remove(oldDetalleCalificacion);
+    detalleCalificacion?.add(newDetalleCalificacion);
+  }
+
+  addDetalleCalificacion(TrimestreDetalleCalificacion newDetalleCalificacion) {
+    detalleCalificacion?.add(newDetalleCalificacion);
+  }
 
   validarNumeroTrimestre() {
     numeroTrimestre == null
@@ -51,22 +62,12 @@ class CabeceraTrimestreModel extends AbstractModel<int> {
         ? throw Exception(
             {"numeroTrimestre": "No puede existir mas de 2 trimestres"})
         : null;
-  }
-
-  /*
-  validarActividades() {
-    if (actividades == null) {
-      throw Exception({"actividades": "No puede ser nulo"});
-    }
-    if (actividades!.length > 2) {
-      throw Exception(
-          {"actividades": "No pueden existir mas de 2 actividades"});
-    }
-  }*/
-
-  DetalleActividadModel getActividad(
-      List<DetalleActividadModel> actividades, int actividad) {
-    return actividades.where((element) => element.nombre == actividad).first;
+    materiaEstudiante == null
+        ? throw Exception({"materiaEstudiante": "No puede ser un valor nulo"})
+        : null;
+    usuario == null
+        ? throw Exception({"usuario": "No puede ser un valor nulo"})
+        : null;
   }
 
   @override
@@ -76,65 +77,55 @@ class CabeceraTrimestreModel extends AbstractModel<int> {
       "id": id,
       "numero_trimestre": numeroTrimestre,
       "materia_estudiante": materiaEstudiante!.id,
-      "aporte_cualitativo": (calificacion
-          .where((element) => element['id'] == aporteCualitativo)
-          .first)['id'],
-      "proyecto_integrador": (calificacion
-          .where((element) => element['id'] == proyectoIntegrador)
-          .first)['id'],
-      "cualitativo_proyecto_integrador": (calificacion
-          .where((element) => element['id'] == cualitativoProyectoIntegrador)
-          .first)['id'],
-      "detalle_trimestre": detalleTrimestre!.map((e) => e.toJson()).toList(),
+      "aporte_cualitativo": aporteCualitativo,
+      "proyecto_integrador": proyectoIntegrador,
+      "cualitativo_proyecto_integrador": cualitativoProyectoIntegrador,
+      "calificacion_detalle": detalleCalificacion!
+          .map(
+            (e) => e.toJson(),
+          )
+          .toList(),
+      "usuario": usuario,
     };
   }
 
-  DetalleTrimestreModel getAporteIndividual() {
-    debugPrint("obteniendo APORTE INDIVIDUAL");
-    debugPrint("detalleTrimestre: $detalleTrimestre");
-    var data = detalleTrimestre!.isNotEmpty
-        ? detalleTrimestre!.where((element) => element.nombre == 1).isNotEmpty
-            ? detalleTrimestre!.where((element) => element.nombre == 1).first
-            : DetalleTrimestreModel(cabecerasActividad: [])
-        : DetalleTrimestreModel(cabecerasActividad: []);
-    debugPrint("data: $data");
+  ///
+  ///@param int aporte 1 (INDIVIDUAL) o 2 (GRUPAL)
+  ///@param int actividad 1(LECCION),2 (PRUEBAS), 3 (TAREAS), 4 (PROYECTOS), 5 (EXPOSICIONES), 6 (TALLER)
+  ///@param int item 1, 2, 3, 4
+  ///@return DetalleTrimestreModel?
+  TrimestreDetalleCalificacion getCalificacion(
+      int aporte, int actividad, int item) {
+    var calificacion = detalleCalificacion!.where((element) =>
+        element.actividad == actividad &&
+        element.aporte == aporte &&
+        element.item == item);
+    var data = calificacion.isNotEmpty
+        ? calificacion.first
+        : TrimestreDetalleCalificacion(calificacion: 0);
     return data;
   }
-
-  DetalleTrimestreModel getAporteGrupal() {
-    debugPrint("obteniendo APORTE GRUPAL");
-    debugPrint("detalleTrimestre: $detalleTrimestre");
-    return detalleTrimestre != null
-        ? detalleTrimestre!.where((element) => element.nombre == 2).isNotEmpty
-            ? detalleTrimestre!.where((element) => element.nombre == 2).first
-            : DetalleTrimestreModel()
-        : DetalleTrimestreModel();
-  }
-
-  Map getCalificacion(int id) =>
-      calificacion.where((element) => element['id'] == id).first;
 
   factory CabeceraTrimestreModel.fromJson(String str) =>
       CabeceraTrimestreModel.fromMap(json.decode(str));
 
-  factory CabeceraTrimestreModel.fromMap(Map<String, dynamic> json) {
-    debugPrint("jsonTrimestre: $json");
-    debugPrint("jsonDetalleTrimestre: ${json['detalle_trimestre']}");
-    return CabeceraTrimestreModel(
-      id: json['id'],
-      numeroTrimestre: json['numero_trimestre'],
-      aporteCualitativo: int.parse(json['aporte_cualitativo']),
-      proyectoIntegrador: json['proyecto_integrador'],
-      cualitativoProyectoIntegrador:
-          int.parse(json['cualitativo_proyecto_integrador']),
-      detalleTrimestre: (json['detalle_trimestre'] as List)
-          .map((e) => DetalleTrimestreModel.fromMap(e))
-          .toList(),
-    );
-  }
+  factory CabeceraTrimestreModel.fromMap(Map<String, dynamic> json) =>
+      CabeceraTrimestreModel(
+        id: json['id'],
+        numeroTrimestre: json['numero_trimestre'],
+        aporteCualitativo: int.parse(json['aporte_cualitativo']),
+        proyectoIntegrador: json['proyecto_integrador'],
+        materiaEstudiante:
+            MateriaEstudianteModel(id: json['materia_estudiante']),
+        cualitativoProyectoIntegrador:
+            int.parse(json['cualitativo_proyecto_integrador']),
+        detalleCalificacion: (json['calificacion_detalle'] as List)
+            .map((e) => TrimestreDetalleCalificacion.fromMap(e))
+            .toList(),
+      );
 
   @override
   String toString() {
-    return "{id: $id, numeroTrimestre: $numeroTrimestre, materiaEstudiante: $materiaEstudiante, aporteCualitativo: $aporteCualitativo, cualitativoProyectoIntegrador: $cualitativoProyectoIntegrador, detalleTrimestre: $detalleTrimestre }";
+    return "{id: $id, numeroTrimestre: $numeroTrimestre, aporteCualitativo: $aporteCualitativo, proyectoIntegrador: $proyectoIntegrador, cualitativoProyectoIntegrador: $cualitativoProyectoIntegrador, materiaEstudiante: $materiaEstudiante, detalleTrimestre: $detalleCalificacion, usuario: $usuario }";
   }
 }

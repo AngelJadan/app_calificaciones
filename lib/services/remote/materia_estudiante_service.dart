@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 class MateriaEstudianteService extends AbstractService<MateriaEstudianteModel> {
   @override
   Future<MateriaEstudianteModel> create(MateriaEstudianteModel object) async {
+    debugPrint("object: ${object.toJson()}");
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
         session.token!, session.cookies as String);
