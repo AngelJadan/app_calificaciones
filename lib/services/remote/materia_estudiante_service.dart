@@ -5,13 +5,11 @@ import 'package:app_calificaciones/models/login_model.dart';
 import 'package:app_calificaciones/models/materia_curso_model.dart';
 import 'package:app_calificaciones/services/remote/abstract_service.dart';
 import 'package:app_calificaciones/utils/connections.dart';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class MateriaEstudianteService extends AbstractService<MateriaEstudianteModel> {
   @override
   Future<MateriaEstudianteModel> create(MateriaEstudianteModel object) async {
-    debugPrint("object: ${object.toJson()}");
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
         session.token!, session.cookies as String);
@@ -91,12 +89,14 @@ class MateriaEstudianteService extends AbstractService<MateriaEstudianteModel> {
   }
 
   Future<List<MateriaEstudianteModel>> getMateriaEstudiante(
-      int materiaCursoDocente) async {
+      int materiaCursoDocente, int trimestre) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
         session.token!, session.cookies as String);
-    var request = http.Request('GET',
-        Uri.parse("${UrlAddress.curso_estudiante}$materiaCursoDocente/"));
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            "${UrlAddress.curso_estudiante}$materiaCursoDocente/$trimestre/"));
 
     request.headers.addAll(headers);
 

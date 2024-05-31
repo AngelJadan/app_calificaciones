@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:app_calificaciones/models/abstract_model.dart';
 import 'package:app_calificaciones/models/calificacion_estudiante/trimestre_detalle_calificacion.dart';
 import 'package:app_calificaciones/models/materia_curso_model.dart';
-import 'package:flutter/material.dart';
 
 class CabeceraTrimestreModel extends AbstractModel<int> {
   CabeceraTrimestreModel({

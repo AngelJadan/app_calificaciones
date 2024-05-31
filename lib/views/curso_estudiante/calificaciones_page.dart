@@ -1,5 +1,4 @@
 import 'package:app_calificaciones/controller/curso_estudiante_controller.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -24,17 +23,10 @@ Widget viewDataCalificaciones(
             rows: controller.rows,
             onLoaded: (PlutoGridOnLoadedEvent event) {
               controller.stateManager = event.stateManager;
-              if (kDebugMode) {
-                debugPrint("event loaded: $event");
-              }
             },
             onChanged: (PlutoGridOnChangedEvent event) {
-              debugPrint("event: $event, columnIdx: ${event.columnIdx}");
               var columnIndex = event.columnIdx;
               var rowIndex = event.rowIdx;
-              debugPrint(
-                  "columnIndex: $columnIndex, RowIndex: $rowIndex, value: ${event.value}");
-              //debugPrint("dataColumn: $dataColumn");
               controller.setNewCalificacion(
                   columnIndex, rowIndex, event.value, context);
             },

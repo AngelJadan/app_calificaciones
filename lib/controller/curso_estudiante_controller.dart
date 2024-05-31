@@ -14,7 +14,6 @@ import 'package:app_calificaciones/services/remote/materia_estudiante_service.da
 import 'package:app_calificaciones/services/remote/trimestre_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:motion_toast/motion_toast.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 class CursoEstudianteController extends AbstractController<
@@ -29,6 +28,8 @@ class CursoEstudianteController extends AbstractController<
   LoginModel? session;
   final args = Get.arguments;
   late PlutoGridStateManager stateManager;
+  List<int> trimestres = [1, 2];
+  int trimestre = 1;
 
   List<EstudianteModel> estudiantes = [];
 
@@ -58,14 +59,26 @@ class CursoEstudianteController extends AbstractController<
       final arguments = Get.arguments as Map<String, dynamic>;
       //debugPrint("arguments $arguments");
       //debugPrint("arguments['curso'] ${arguments['curso']}");
-      lists = await service.getMateriaEstudiante(arguments['curso'].id);
-      rows = getRows();
-      //print("lists: $lists");
+      materiaCursoDocente = arguments['curso'];
+      await getCalificacionesTrimestre(arguments['curso'].id, 1);
       materiaCursoDocente = arguments['curso'];
 
       setObject(null);
     }
     addPlutoGroup();
+    change(lists, status: RxStatus.success());
+  }
+
+  getCalificacionesTrimestre(int idMateriaCursoDocente, int trimestre) async {
+    lists =
+        await service.getMateriaEstudiante(idMateriaCursoDocente, trimestre);
+    rows = getRows();
+  }
+
+  updateGetCalificaion(int idMateriaCursoDocente) async {
+    change(null, status: RxStatus.loading());
+    await getCalificacionesTrimestre(idMateriaCursoDocente, trimestre);
+
     change(lists, status: RxStatus.success());
   }
 

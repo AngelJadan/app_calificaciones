@@ -55,6 +55,38 @@ class CursoEstudiantePage extends StatelessWidget {
                                   )
                                 : const Text(""))
                         : const Text(""),
+                    Center(
+                      child: SizedBox(
+                        width: 150,
+                        child: Row(
+                          children: [
+                            const Text("Trimestre: "),
+                            GetBuilder(
+                              init: CursoEstudianteController(),
+                              id: "idTrimestre",
+                              builder: (_) => DropdownButton(
+                                value: controller.trimestre,
+                                items: controller.trimestres
+                                    .map(
+                                      (e) => DropdownMenuItem(
+                                        value: e,
+                                        child: Text(e.toString()),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (value) {
+                                  debugPrint("value: $value");
+                                  controller.update(['idTrimestre']);
+                                  controller.trimestre = value!;
+                                  controller.updateGetCalificaion(
+                                      controller.materiaCursoDocente!.id!);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     viewDataCalificaciones(controller, context),
                     Align(
                       alignment: Alignment.center,
