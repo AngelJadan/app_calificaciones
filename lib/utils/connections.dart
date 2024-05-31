@@ -2,9 +2,9 @@
 
 class UrlAddress {
   // ignore: prefer_final_fields
-  //static String _url = "http://192.168.100.68:8000";
+  //static String _url = "";
   // ignore: prefer_final_fields
-  static String _url = "http://192.168.10.241:8000"; //Oficina
+  static String _url = ""; //Oficina
 
   UrlAddress();
 
