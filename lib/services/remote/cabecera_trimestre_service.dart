@@ -13,7 +13,7 @@ class CabeceraTrimestreService extends AbstractService<CabeceraTrimestreModel> {
   Future<CabeceraTrimestreModel> create(CabeceraTrimestreModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request =
         http.Request('POST', Uri.parse(UrlAddress.trimestre_estudiante));
     request.body = json.encode(removeId(object));
@@ -42,7 +42,7 @@ class CabeceraTrimestreService extends AbstractService<CabeceraTrimestreModel> {
   Future<CabeceraTrimestreModel> update(CabeceraTrimestreModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request =
         http.Request('PUT', Uri.parse(UrlAddress.trimestre_estudiante));
     request.body = json.encode(object.toJson());
@@ -71,7 +71,7 @@ class CabeceraTrimestreService extends AbstractService<CabeceraTrimestreModel> {
     CabeceraTrimestreModel? object;
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
         'GET', Uri.parse("${UrlAddress.trimestre_estudiante}?id=$id/"));
 
@@ -97,7 +97,7 @@ class CabeceraTrimestreService extends AbstractService<CabeceraTrimestreModel> {
     List<CabeceraTrimestreModel> trimestres = [];
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('GET',
         Uri.parse("${UrlAddress.trimestre_estudiante}?id=${estudiante.id}"));
 

@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:app_calificaciones/router/router.dart';
 import 'package:app_calificaciones/utils/injection.dart';
 import 'package:app_calificaciones/utils/intems_drawer.dart';
@@ -10,7 +12,7 @@ final loginController = Get.find<LoginController>();
 getDrawer(BuildContext context) {
   //loginController.getPerson();
   //print(
-  //    "loginController.loginModel.tipoUsuario ${loginController.loginModel.tipoUsuario}");
+  //    "loginController.loginModel!.tipoUsuario ${loginController.loginModel!.tipoUsuario}");
   return Drawer(
     child: FutureBuilder(
       future: loginController.getPerson(),
@@ -38,7 +40,7 @@ getDrawer(BuildContext context) {
                       ),
                       Center(
                         child: Text(
-                          loginController.loginModel.nombre.toString(),
+                          loginController.loginModel!.nombre.toString(),
                         ),
                       )
                     ],
@@ -47,7 +49,7 @@ getDrawer(BuildContext context) {
               ),
               ElevatedButton.icon(
                 onPressed: () {
-                  Get.offAllNamed(Routers.LOGIN);
+                  loginController.logout();
                 },
                 icon: const Icon(
                   Icons.exit_to_app,
@@ -58,10 +60,18 @@ getDrawer(BuildContext context) {
                   style: TextStyle(color: Colors.red),
                 ),
               ),
-              estudiantes(context),
-              loginController.loginModel.tipoUsuario == "2"
-                  ? funcionarios(context)
-                  : const Text(""),
+              loginController.loginModel?.tipoUsuario == "1"
+                  ? menuDocente(context)
+                  : loginController.loginModel!.tipoUsuario == "3"
+                      ? menuSecretaria(context)
+                      : loginController.loginModel!.tipoUsuario == "2"
+                          ? menuRector(context)
+                          : Text(loginController.loginModel!.tipoUsuario
+                              .toString()),
+              //estudiantes(context),
+              //loginController.loginModel!.tipoUsuario == "2"
+              //    ? funcionarios(context)
+              //    : const Text(""),
             ],
           );
         }

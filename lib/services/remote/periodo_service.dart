@@ -12,7 +12,7 @@ class PeriodoService extends AbstractService<PeriodoModel> {
   Future<PeriodoModel> create(PeriodoModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('POST', Uri.parse(UrlAddress.periodo));
     request.body = json.encode(removeId(object));
 
@@ -40,7 +40,7 @@ class PeriodoService extends AbstractService<PeriodoModel> {
   Future<PeriodoModel> update(PeriodoModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('PUT', Uri.parse(UrlAddress.periodo));
     request.body = json.encode(object);
 
@@ -68,7 +68,7 @@ class PeriodoService extends AbstractService<PeriodoModel> {
   Future<bool> delete(PeriodoModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
         'DELETE', Uri.parse("${UrlAddress.periodo}?id=${object.id}"));
     request.body = json.encode(object);
@@ -92,7 +92,7 @@ class PeriodoService extends AbstractService<PeriodoModel> {
   Future<List<PeriodoModel>> allList() async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('GET', Uri.parse(UrlAddress.all_periodo));
 
     request.headers.addAll(headers);
@@ -116,7 +116,7 @@ class PeriodoService extends AbstractService<PeriodoModel> {
   Future<PeriodoModel> lastPeriodo() async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('GET', Uri.parse(UrlAddress.all_periodo));
 
     request.headers.addAll(headers);

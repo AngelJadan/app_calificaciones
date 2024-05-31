@@ -2,12 +2,15 @@
 import 'package:app_calificaciones/models/login_model.dart';
 import 'package:app_calificaciones/services/local/authentication.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../router/router.dart';
 
 class HomeController extends GetxController {
   SessionProvider sessionProvider = SessionProvider();
 
-  LoginModel loginModel = LoginModel();
+  LoginModel? loginModel;
   RxBool loading = true.obs;
 
   @override
@@ -18,21 +21,20 @@ class HomeController extends GetxController {
 
   init() async {
     await getSession();
-    loading.value = false;
+    if (loginModel == null) {
+      debugPrint("loginModel is null");
+      //Get.offAllNamed(Routers.LOGIN);
+      Navigator.pushNamed(Get.context!, Routers.LOGIN);
+    }
     update(['home']);
+
+    loading.value = false;
   }
 
   getSession() async {
-    if (kDebugMode) {
-      print("inicio get session");
-    }
     sessionProvider.getSession();
     loginModel = await sessionProvider.getSession();
-
     loading.value = false;
     update();
-    if (kDebugMode) {
-      print("inicio session");
-    }
   }
 }

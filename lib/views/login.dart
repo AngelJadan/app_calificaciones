@@ -24,7 +24,7 @@ class _LoginState extends State<LoginView> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      onChanged: (value) => loginController.loginModel.correo = value,
+      onChanged: (value) => loginController.loginModel!.correo = value,
     );
     final passwordForm = TextFormField(
       obscureText: true,
@@ -34,7 +34,7 @@ class _LoginState extends State<LoginView> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      onChanged: (value) => loginController.loginModel.password = value,
+      onChanged: (value) => loginController.loginModel!.password = value,
     );
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -64,12 +64,12 @@ class _LoginState extends State<LoginView> {
                       backgroundColor: Colors.blue,
                     ),
                     onPressed: () async {
-                      //if (loginProvider.loginModel.isLogin) {
+                      //if (loginProvider.loginModel!.isLogin) {
                       //  print("Session iniciada");
                       //} else {
                       await loginController.login(
-                          loginController.loginModel.correo!,
-                          loginController.loginModel.password!);
+                          loginController.loginModel!.correo!,
+                          loginController.loginModel!.password!);
                     },
                     child: const Text(
                       "Ingresar",

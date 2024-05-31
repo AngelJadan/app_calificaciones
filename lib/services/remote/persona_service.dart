@@ -14,7 +14,7 @@ class PersonaService extends AbstractService<PersonaModel> {
   Future<PersonaModel> create(PersonaModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('POST', Uri.parse(UrlAddress.funcionario));
     request.body = json.encode(removeId(object));
 
@@ -42,7 +42,7 @@ class PersonaService extends AbstractService<PersonaModel> {
   Future<PersonaModel> update(PersonaModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('PUT', Uri.parse(UrlAddress.funcionario));
     request.body = json.encode(object);
 
@@ -68,7 +68,7 @@ class PersonaService extends AbstractService<PersonaModel> {
   Future<bool> remove(PersonaModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
       'DELETE',
       Uri.parse("${UrlAddress.funcionario}?id=${object.id}"),
@@ -76,10 +76,7 @@ class PersonaService extends AbstractService<PersonaModel> {
     request.headers.addAll(headers);
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
-    if (kDebugMode) {
-      print("response: ${response.statusCode}");
-      print("response body: ${response.body}");
-    }
+
     if (response.statusCode == 200) {
       return true;
     } else {
@@ -91,7 +88,7 @@ class PersonaService extends AbstractService<PersonaModel> {
   Future<List<PersonaModel>> getAll() async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('GET', Uri.parse(UrlAddress.list_funcionario));
 
     request.headers.addAll(headers);

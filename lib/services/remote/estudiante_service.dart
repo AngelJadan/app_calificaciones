@@ -13,7 +13,7 @@ class EstudianteService extends AbstractService<EstudianteModel> {
   Future<EstudianteModel> create(EstudianteModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('POST', Uri.parse(UrlAddress.estudiante));
     request.body = json.encode(removeId(object));
 
@@ -41,7 +41,7 @@ class EstudianteService extends AbstractService<EstudianteModel> {
   Future<bool> update(EstudianteModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('PUT', Uri.parse(UrlAddress.estudiante));
     request.body = json.encode(object.toJson());
 
@@ -64,7 +64,7 @@ class EstudianteService extends AbstractService<EstudianteModel> {
   Future<bool> delete(EstudianteModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
         'DELETE', Uri.parse("${UrlAddress.estudiante}?id=${object.id}"));
 
@@ -88,7 +88,7 @@ class EstudianteService extends AbstractService<EstudianteModel> {
   Future<List<EstudianteModel>> getAll() async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('GET', Uri.parse(UrlAddress.list_estudiante));
 
     request.headers.addAll(headers);

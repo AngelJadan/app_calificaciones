@@ -12,7 +12,7 @@ class MateriaEstudianteService extends AbstractService<MateriaEstudianteModel> {
   Future<MateriaEstudianteModel> create(MateriaEstudianteModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request =
         http.Request('POST', Uri.parse(UrlAddress.materia_estudiante));
     request.body = json.encode(removeId(object));
@@ -41,7 +41,7 @@ class MateriaEstudianteService extends AbstractService<MateriaEstudianteModel> {
   Future<bool?> delete(MateriaEstudianteModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('DELETE',
         Uri.parse("${UrlAddress.materia_estudiante}?id=${object.id}"));
 
@@ -65,7 +65,7 @@ class MateriaEstudianteService extends AbstractService<MateriaEstudianteModel> {
   Future<MateriaEstudianteModel> update(MateriaEstudianteModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('PUT', Uri.parse(UrlAddress.materia));
     request.body = json.encode(object);
 
@@ -92,7 +92,7 @@ class MateriaEstudianteService extends AbstractService<MateriaEstudianteModel> {
       int materiaCursoDocente, int trimestre) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
         'GET',
         Uri.parse(

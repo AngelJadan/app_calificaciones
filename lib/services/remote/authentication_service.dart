@@ -29,8 +29,10 @@ class AuthentificacionService extends AbstractService<LoginModel> {
   }
 
   Future<bool> logout() async {
-    var headers = UrlAddress.headers;
-    var request = http.Request('POST', Uri.parse(UrlAddress.login));
+    LoginModel? session = await localAuthRepository.getSession();
+    var headers = UrlAddress.getHeadersWithToken(
+        session!.token!, session.cookies as String);
+    var request = http.Request('GET', Uri.parse(UrlAddress.logout));
 
     request.headers.addAll(headers);
 

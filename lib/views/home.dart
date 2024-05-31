@@ -29,7 +29,9 @@ class HomePage extends StatelessWidget {
               appBar: AppBar(
                 title: const Text(""),
               ),
-              drawer: getDrawer(Get.context!),
+              drawer: controller.loginModel != null
+                  ? getDrawer(Get.context!)
+                  : const Text(""),
               body: Container(
                 margin: const EdgeInsets.all(20),
                 width: width,

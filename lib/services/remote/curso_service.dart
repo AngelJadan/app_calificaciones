@@ -12,7 +12,7 @@ class CursoService extends AbstractService<CursoModel> {
   Future<CursoModel> create(CursoModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('POST', Uri.parse(UrlAddress.curso));
     request.body = json.encode(removeId(object));
 
@@ -39,7 +39,7 @@ class CursoService extends AbstractService<CursoModel> {
   Future<List<CursoModel>> listCurso() async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('GET', Uri.parse(UrlAddress.list_all_cursos));
 
     request.headers.addAll(headers);
@@ -64,7 +64,7 @@ class CursoService extends AbstractService<CursoModel> {
   Future<List<Map>> listParalelos() async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('GET', Uri.parse(UrlAddress.list_paralelos));
 
     request.headers.addAll(headers);
@@ -90,7 +90,7 @@ class CursoService extends AbstractService<CursoModel> {
   Future<bool> delete(CursoModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
         'DELETE', Uri.parse("${UrlAddress.curso}?id=${object.id}"));
 

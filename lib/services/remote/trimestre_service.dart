@@ -13,7 +13,7 @@ class TrimestreService extends AbstractService<CabeceraTrimestreModel> {
   Future<CabeceraTrimestreModel> create(CabeceraTrimestreModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request =
         http.Request('POST', Uri.parse(UrlAddress.estudiante_trimestre));
     request.body = json.encode(removeId(object));
@@ -23,7 +23,6 @@ class TrimestreService extends AbstractService<CabeceraTrimestreModel> {
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
     //print('cookie: $cookie');
-    debugPrint("response: ${response.body}");
     if (response.statusCode == 201) {
       var resul = jsonDecode(utf8.decode(response.bodyBytes));
       var id = resul["id"];
@@ -43,7 +42,7 @@ class TrimestreService extends AbstractService<CabeceraTrimestreModel> {
   Future<CabeceraTrimestreModel> update(CabeceraTrimestreModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request =
         http.Request('PUT', Uri.parse(UrlAddress.estudiante_trimestre));
     request.body = json.encode(object);

@@ -2,9 +2,9 @@
 
 class UrlAddress {
   // ignore: prefer_final_fields
-  //static String _url = "";
+  //static String _url = "http://192.168.100.68:8000";
   // ignore: prefer_final_fields
-  static String _url = ""; //Oficina
+  static String _url = "http://192.168.10.241:8000"; //Oficina
 
   UrlAddress();
 
@@ -25,6 +25,7 @@ class UrlAddress {
   }
 
   static String login = "$_url/obtener_token/";
+  static String logout = "$_url/log_out/";
 
   //cursos
   // ignore: duplicate_ignore

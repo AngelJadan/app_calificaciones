@@ -2,6 +2,126 @@ import 'package:app_calificaciones/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+menuDocente(BuildContext context) {
+  return ExpansionTile(
+    leading: const Icon(Icons.settings),
+    title: const Text(
+      "Curso",
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    children: [
+      ListTile(
+        leading: const Icon(Icons.person_add),
+        title: const Text('Cursos'),
+        onTap: () {
+          Get.offAllNamed(Routers.CURSO);
+        },
+      ),
+    ],
+  );
+}
+
+menuSecretaria(BuildContext context) {
+  return ExpansionTile(
+    leading: const Icon(Icons.settings),
+    title: const Text(
+      "Opciones",
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    children: [
+      ListTile(
+        leading: const Icon(Icons.add_box_outlined),
+        title: const Text('Materias'),
+        onTap: () {
+          Get.offAllNamed(Routers.MATERIA);
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.person_add),
+        title: const Text('Cursos'),
+        onTap: () {
+          Get.offAllNamed(Routers.CURSO);
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.person_add),
+        title: const Text('Personal'),
+        onTap: () {
+          Get.offAllNamed(Routers.FUNCIONARIO);
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.person_add),
+        title: const Text('Estudiantes'),
+        onTap: () {
+          Get.offAllNamed(Routers.ESTUDIANTE);
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.settings_applications),
+        title: const Text('Periodos'),
+        onTap: () {
+          Get.toNamed(Routers.PERIODO);
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.settings_applications),
+        title: const Text('Materias de periodos'),
+        onTap: () {
+          Get.toNamed(Routers.PERIODO);
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.settings_accessibility),
+        title: const Text('Materias estudiantes.'),
+        onTap: () {
+          Get.toNamed(Routers.MATERIACURSODOCENTE);
+        },
+      ),
+    ],
+  );
+}
+
+menuRector(BuildContext context) {
+  debugPrint("rector");
+  return ExpansionTile(
+    leading: const Icon(Icons.settings),
+    title: const Text(
+      "Opciones",
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    children: [
+      ListTile(
+        leading: const Icon(Icons.person_add),
+        title: const Text('Cursos'),
+        onTap: () {
+          Get.offAllNamed(Routers.CURSO);
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.person_add),
+        title: const Text('Personal'),
+        onTap: () {
+          Get.offAllNamed(Routers.FUNCIONARIO);
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.person_add),
+        title: const Text('Estudiantes'),
+        onTap: () {
+          Get.offAllNamed(Routers.ESTUDIANTE);
+        },
+      ),
+    ],
+  );
+}
+
 estudiantes(BuildContext context) {
   return ExpansionTile(
     leading: const Icon(

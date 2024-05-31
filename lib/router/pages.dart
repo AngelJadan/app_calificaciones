@@ -2,6 +2,7 @@ import 'package:app_calificaciones/router/router.dart';
 import 'package:app_calificaciones/views/curso_estudiante/curso_estudiante_page.dart';
 import 'package:app_calificaciones/views/curso/curso_page.dart';
 import 'package:app_calificaciones/views/curso_estudiante/cursos_periodo_page.dart';
+import 'package:app_calificaciones/views/login.dart';
 import 'package:app_calificaciones/views/materia/materia_page.dart';
 import 'package:app_calificaciones/views/materia_curso_docente_periodo/materia_curso_docente_periodo_page.dart';
 import 'package:app_calificaciones/views/periodo/periodo_page.dart';
@@ -14,6 +15,7 @@ import '../models/materia_curso_model.dart';
 
 class Pages {
   static final List<GetPage> pages = [
+    GetPage(name: Routers.LOGIN, page: () => const LoginView()),
     GetPage(name: Routers.HOME, page: () => const HomePage()),
     GetPage(
       name: Routers.CURSO,

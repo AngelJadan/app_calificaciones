@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/login_model.dart';
@@ -27,9 +28,12 @@ class SessionProvider {
   }
 
   // Método para cargar el estado de la sesión al iniciar la aplicación
-  Future<LoginModel> getSession() async {
+  Future<LoginModel?> getSession() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String data = prefs.getString("session") ?? '';
-    return LoginModel.fromMap(jsonDecode(data));
+    var data = prefs.getString("session");
+    debugPrint("data: $data");
+    return data != null
+        ? LoginModel.fromMap(jsonDecode(data.toString()))
+        : null;
   }
 }

@@ -12,7 +12,7 @@ class MateriaService extends AbstractService<MateriaModel> {
   Future<MateriaModel> create(MateriaModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('POST', Uri.parse(UrlAddress.materia));
     request.body = json.encode(removeId(object));
 
@@ -40,7 +40,7 @@ class MateriaService extends AbstractService<MateriaModel> {
   Future<MateriaModel> update(MateriaModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('PUT', Uri.parse(UrlAddress.materia));
     request.body = json.encode(object);
 
@@ -66,7 +66,7 @@ class MateriaService extends AbstractService<MateriaModel> {
   Future<bool> remove(MateriaModel object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
       'DELETE',
       Uri.parse("${UrlAddress.materia}?id=${object.id}"),
@@ -85,7 +85,7 @@ class MateriaService extends AbstractService<MateriaModel> {
   Future<List<MateriaModel>> getAll() async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('GET', Uri.parse(UrlAddress.materiaList));
 
     request.headers.addAll(headers);
@@ -110,7 +110,7 @@ class MateriaService extends AbstractService<MateriaModel> {
   Future<List<Map>> listArea() async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request('GET', Uri.parse(UrlAddress.listArea));
 
     request.headers.addAll(headers);

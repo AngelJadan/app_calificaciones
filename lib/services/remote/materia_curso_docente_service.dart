@@ -13,7 +13,7 @@ class MateriaCursoDocenteService extends AbstractService<MateriaCursoDocente> {
   Future<MateriaCursoDocente> create(MateriaCursoDocente object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
         'POST', Uri.parse(UrlAddress.materia_curso_docente_periodo));
     request.body = json.encode(removeId(object));
@@ -42,7 +42,7 @@ class MateriaCursoDocenteService extends AbstractService<MateriaCursoDocente> {
   Future<MateriaCursoDocente> update(MateriaCursoDocente object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
         'PUT', Uri.parse(UrlAddress.materia_curso_docente_periodo));
     request.body = json.encode(object);
@@ -71,7 +71,7 @@ class MateriaCursoDocenteService extends AbstractService<MateriaCursoDocente> {
   Future<bool> delete(MateriaCursoDocente object) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
         'DELETE',
         Uri.parse(
@@ -97,7 +97,7 @@ class MateriaCursoDocenteService extends AbstractService<MateriaCursoDocente> {
   Future<List<MateriaCursoDocente>> allList() async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
         'GET', Uri.parse(UrlAddress.list_materia_curso_docente_periodo));
 
@@ -123,7 +123,7 @@ class MateriaCursoDocenteService extends AbstractService<MateriaCursoDocente> {
       PeriodoModel periodo) async {
     LoginModel? session = await localAuthRepository.getSession();
     var headers = UrlAddress.getHeadersWithToken(
-        session.token!, session.cookies as String);
+        session!.token!, session.cookies as String);
     var request = http.Request(
         'GET',
         Uri.parse(
