@@ -19,7 +19,7 @@ class CursoEstudiantePage extends StatelessWidget {
       builder: (controller) => Scaffold(
         appBar: AppBar(
           title: IconButton(
-            onPressed: () => Get.offAllNamed(Routers.PERIODOCURSO),
+            onPressed: () => Get.offAllNamed(Routers.HOME),
             icon: const SizedBox(
               width: 50,
               child: Row(

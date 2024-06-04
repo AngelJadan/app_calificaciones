@@ -4,6 +4,7 @@ import 'package:app_calificaciones/router/router.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 import '../../utils/drawer.dart';
 
@@ -160,139 +161,148 @@ class FuncionarioPage extends StatelessWidget {
         title: const Text("Nuevo funcionario"),
         content: Form(
           key: controller.formKeyCliente,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: controller.nombreController,
-                decoration: const InputDecoration(
-                  label: Text("Nombre"),
-                ),
-                maxLength: 200,
-                validator: (value) => value!.isEmpty ? "(*)" : null,
-              ),
-              TextFormField(
-                controller: controller.apellidoController,
-                decoration: const InputDecoration(
-                  label: Text("Apellido"),
-                ),
-                maxLength: 200,
-                validator: (value) => value!.isEmpty ? "(*)" : null,
-              ),
-              GetBuilder(
-                init: FuncionarioController(),
-                id: "idTipoDoc",
-                builder: (_) => DropdownButton<String>(
-                  value: controller.documentoSeleccionado,
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  onChanged: (String? value) {
-                    controller.selectTipoDocumento(value!);
-                  },
-                  items: controller.tipoDocumentos
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-              GetBuilder(
-                init: FuncionarioController(),
-                id: "idTipoDoc",
-                builder: (_) => TextFormField(
-                  controller: controller.identificacionController,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: controller.nombreController,
                   decoration: const InputDecoration(
-                    label: Text("Identificacion(cedula/pasaporte)"),
+                    label: Text("Nombre"),
                   ),
-                  maxLength:
-                      controller.documentoSeleccionado == "Cedula" ? 10 : 20,
+                  maxLength: 200,
                   validator: (value) => value!.isEmpty ? "(*)" : null,
                 ),
-              ),
-              GetBuilder(
-                init: FuncionarioController(),
-                id: "idTipoFuncionario",
-                builder: (_) => DropdownButton<String>(
-                  value: controller.object.value.tipo,
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurpleAccent,
+                TextFormField(
+                  controller: controller.apellidoController,
+                  decoration: const InputDecoration(
+                    label: Text("Apellido"),
                   ),
-                  onChanged: (String? value) {
-                    controller.object.value.tipo = value;
-                    controller.update(['idTipoFuncionario']);
-                  },
-                  items: ['1', '2', '3']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(controller.object.value.getTipo(value)),
-                    );
-                  }).toList(),
+                  maxLength: 200,
+                  validator: (value) => value!.isEmpty ? "(*)" : null,
                 ),
-              ),
-              Row(
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      controller.chooseDateInit();
-                    },
-                    icon: const Icon(Icons.calendar_month),
-                    label: const Text("Fecha de ingreso"),
-                  ),
-                  Obx(
-                    () => Text(
-                      "${controller.object.value.fechaIngreso!.year}/${controller.object.value.fechaIngreso!.month}/${controller.object.value.fechaIngreso!.day}",
+                GetBuilder(
+                  init: FuncionarioController(),
+                  id: "idTipoDoc",
+                  builder: (_) => DropdownButton<String>(
+                    value: controller.documentoSeleccionado,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
                     ),
+                    onChanged: (String? value) {
+                      controller.selectTipoDocumento(value!);
+                    },
+                    items: controller.tipoDocumentos
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
-                ],
-              ),
-              TextFormField(
-                controller: controller.correoController,
-                decoration: const InputDecoration(
-                  label: Text("Correo electronico"),
                 ),
-                maxLength: 200,
-                validator: (value) {
-                  return (value!.isEmpty ||
-                          !RegExp(r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$')
-                              .hasMatch(value))
-                      ? "Ingrese un correo valido"
-                      : null;
-                },
-              ),
-            ],
+                GetBuilder(
+                  init: FuncionarioController(),
+                  id: "idTipoDoc",
+                  builder: (_) => TextFormField(
+                    controller: controller.identificacionController,
+                    decoration: const InputDecoration(
+                      label: Text("Identificacion(cedula/pasaporte)"),
+                    ),
+                    maxLength:
+                        controller.documentoSeleccionado == "Cedula" ? 10 : 20,
+                    validator: (value) => value!.isEmpty ? "(*)" : null,
+                  ),
+                ),
+                GetBuilder(
+                  init: FuncionarioController(),
+                  id: "idTipoFuncionario",
+                  builder: (_) => DropdownButton<String>(
+                    value: controller.object.value.tipo,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String? value) {
+                      controller.object.value.tipo = value;
+                      controller.update(['idTipoFuncionario']);
+                    },
+                    items: ['1', '2', '3']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(controller.object.value.getTipo(value)),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                Row(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        controller.chooseDateInit();
+                      },
+                      icon: const Icon(Icons.calendar_month),
+                      label: const Text("Fecha de ingreso"),
+                    ),
+                    Obx(
+                      () => Text(
+                        "${controller.object.value.fechaIngreso!.year}/${controller.object.value.fechaIngreso!.month}/${controller.object.value.fechaIngreso!.day}",
+                      ),
+                    ),
+                  ],
+                ),
+                TextFormField(
+                  controller: controller.correoController,
+                  decoration: const InputDecoration(
+                    label: Text("Correo electronico"),
+                  ),
+                  maxLength: 200,
+                  validator: (value) {
+                    return (value!.isEmpty ||
+                            !RegExp(r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$')
+                                .hasMatch(value))
+                        ? "Ingrese un correo valido"
+                        : null;
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         actions: [
           ElevatedButton(
             onPressed: () {
+              debugPrint("inicia validar formulario");
               if (controller.formKeyCliente.currentState!.validate()) {
-                if (controller.object.value.tipo == "1") {
+                debugPrint(
+                    "paso validacion formulario: ${controller.object.value.tipo}");
+                if (controller.object.value.tipoIdetificacion == "Cedula") {
+                  debugPrint("es cedula");
                   if (controller.object.value.validarCedula(
-                      controller.identificacionController.text)) {
+                          controller.identificacionController.text) ==
+                      true) {
+                    debugPrint("inicia registro funcionario");
                     controller.saveFuncionario();
+                    Get.back();
                   } else {
-                    Get.defaultDialog(
-                      title: "Error validacion cedula",
-                      content: const Text(
-                          "El número de cédula ingresado no es valido."),
-                      onConfirm: () => Get.back(),
-                    );
+                    debugPrint("cedula incorrecta");
+                    MotionToast.error(
+                      description: const Text(
+                          "El número de cedula recibido no es valido"),
+                    ).show(context);
                   }
                 } else {
                   controller.saveFuncionario();
+                  Get.back();
                 }
-                Get.back();
               }
             },
             style: ElevatedButton.styleFrom(

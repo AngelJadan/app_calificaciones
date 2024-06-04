@@ -1,6 +1,7 @@
 import 'package:app_calificaciones/controller/curso_controller.dart';
 import 'package:app_calificaciones/controller/curso_estudiante_controller.dart';
 import 'package:app_calificaciones/controller/curso_periodo_controller.dart';
+import 'package:app_calificaciones/controller/docente_controller.dart';
 import 'package:app_calificaciones/controller/estudiante_controller.dart';
 import 'package:app_calificaciones/controller/funcionario_controller.dart';
 import 'package:app_calificaciones/controller/home_controller.dart';
@@ -32,6 +33,7 @@ class Injection {
 
     Get.lazyPut(() => FuncionarioController());
     Get.lazyPut(() => PersonaService());
+    Get.lazyPut(() => DocenteController());
 
     Get.lazyPut(() => EstudianteController());
     Get.lazyPut(() => EstudianteService());

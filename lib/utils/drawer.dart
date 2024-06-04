@@ -80,6 +80,21 @@ getDrawer(BuildContext context) {
   );
 }
 
+getMenuGridHomeDocente(BuildContext context) {
+  Injection.init();
+  return Column(
+    children: [
+      IconButton(
+        onPressed: () {
+          Get.offAllNamed(Routers.DOCENTEMATERIAS);
+        },
+        icon: const Icon(Icons.list),
+      ),
+      const Text("Mis cursos y materias"),
+    ],
+  );
+}
+
 getMenuGridHome(BuildContext context) {
   final width = context.mediaQuery.size.width;
   Injection.init();

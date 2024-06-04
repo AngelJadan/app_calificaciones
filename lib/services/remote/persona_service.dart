@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:app_calificaciones/models/login_model.dart';
 import 'package:app_calificaciones/models/persona_model.dart';
-import 'package:flutter/foundation.dart';
 
 import '../../utils/connections.dart';
 import 'abstract_service.dart';
@@ -26,7 +25,6 @@ class PersonaService extends AbstractService<PersonaModel> {
     if (response.statusCode == 201) {
       var resul = jsonDecode(utf8.decode(response.bodyBytes));
       var id = resul["id"];
-      //print(response.headers);
       object.id = id;
     } else {
       try {

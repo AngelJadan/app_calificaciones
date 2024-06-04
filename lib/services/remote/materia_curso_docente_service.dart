@@ -146,4 +146,31 @@ class MateriaCursoDocenteService extends AbstractService<MateriaCursoDocente> {
       }
     }
   }
+
+  Future<List<MateriaCursoDocente>> listDocenteCursos() async {
+    LoginModel? session = await localAuthRepository.getSession();
+    var headers = UrlAddress.getHeadersWithToken(
+        session!.token!, session.cookies as String);
+    var request = http.Request(
+        'GET', Uri.parse("${UrlAddress.list_docente_cursos}${session.id}/"));
+
+    request.headers.addAll(headers);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    print("response status: ${response.statusCode}");
+    print("response body: ${response.body}");
+    if (response.statusCode == 200) {
+      return (jsonDecode(utf8.decode(response.bodyBytes)) as List)
+          .map((e) => MateriaCursoDocente.froMap(e))
+          .toList()
+          .cast<MateriaCursoDocente>();
+    } else {
+      try {
+        throw Exception(utf8.decode(response.bodyBytes));
+      } on SocketException catch (_) {
+        rethrow;
+      }
+    }
+  }
 }

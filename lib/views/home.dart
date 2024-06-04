@@ -37,7 +37,9 @@ class HomePage extends StatelessWidget {
                 width: width,
                 height: height,
                 child: Center(
-                  child: getMenuGridHome(context),
+                  child: controller.loginModel!.tipoUsuario == "1"
+                      ? getMenuGridHomeDocente(context)
+                      : getMenuGridHome(context),
                 ),
               ),
             ),

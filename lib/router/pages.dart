@@ -2,6 +2,7 @@ import 'package:app_calificaciones/router/router.dart';
 import 'package:app_calificaciones/views/curso_estudiante/curso_estudiante_page.dart';
 import 'package:app_calificaciones/views/curso/curso_page.dart';
 import 'package:app_calificaciones/views/curso_estudiante/cursos_periodo_page.dart';
+import 'package:app_calificaciones/views/docente_cursos.dart';
 import 'package:app_calificaciones/views/login.dart';
 import 'package:app_calificaciones/views/materia/materia_page.dart';
 import 'package:app_calificaciones/views/materia_curso_docente_periodo/materia_curso_docente_periodo_page.dart';
@@ -50,5 +51,9 @@ class Pages {
       name: Routers.PERIODOCURSO,
       page: () => const CursosPeriodoPage(),
     ),
+    GetPage(
+      name: Routers.DOCENTEMATERIAS,
+      page: () => const DocenteCurso(),
+    )
   ];
 }

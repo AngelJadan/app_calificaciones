@@ -173,6 +173,8 @@ class FuncionarioController
 
   selectTipoDocumento(String tipoDocumento) {
     documentoSeleccionado = tipoDocumento;
+    object.value.tipoIdetificacion = "1";
     update(['idTipoDoc']);
   }
+  
 }

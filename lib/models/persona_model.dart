@@ -79,9 +79,8 @@ class PersonaModel extends AbstractModel<int> {
     if (digitoEsperado == 10) {
       digitoEsperado = 0;
     }
-
     // Comparar el dígito verificador esperado con el proporcionado
-    return digitoEsperado == verificador;
+    return digitoEsperado == verificador ? true : false;
   }
 
   String getTipoDocumento(String tipo) {

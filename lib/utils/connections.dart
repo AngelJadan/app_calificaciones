@@ -59,4 +59,5 @@ class UrlAddress {
   static String trimestre_estudiante = "$_url/calificacion/cabecera-trimestre/";
   static String list_estudiante_trimeste =
       "$_url/calificacion/cabecera-trimestre/";
+  static String list_docente_cursos = "$_url/curso/list-cursos-docente/";
 }
