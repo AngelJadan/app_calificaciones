@@ -88,9 +88,16 @@ getMenuGridHomeDocente(BuildContext context) {
         onPressed: () {
           Get.offAllNamed(Routers.DOCENTEMATERIAS);
         },
-        icon: const Icon(Icons.list),
+        icon: const Icon(
+          Icons.list,
+          color: Colors.amber,
+          size: 50,
+        ),
       ),
-      const Text("Mis cursos y materias"),
+      const Text(
+        "Mis cursos y materias",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
     ],
   );
 }

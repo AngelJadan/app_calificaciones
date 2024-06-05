@@ -158,8 +158,6 @@ class MateriaCursoDocenteService extends AbstractService<MateriaCursoDocente> {
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
-    print("response status: ${response.statusCode}");
-    print("response body: ${response.body}");
     if (response.statusCode == 200) {
       return (jsonDecode(utf8.decode(response.bodyBytes)) as List)
           .map((e) => MateriaCursoDocente.froMap(e))

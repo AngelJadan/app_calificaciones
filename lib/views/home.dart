@@ -28,6 +28,8 @@ class HomePage extends StatelessWidget {
           : Scaffold(
               appBar: AppBar(
                 title: const Text(""),
+                backgroundColor:
+                    MaterialStateColor.resolveWith((states) => Colors.amber),
               ),
               drawer: controller.loginModel != null
                   ? getDrawer(Get.context!)

@@ -20,7 +20,7 @@ class HomeController extends GetxController {
 
   init() async {
     await getSession();
-    if (loginModel == null) {
+    if (loginModel == null || loginModel!.id == null) {
       debugPrint("loginModel is null");
       //Get.offAllNamed(Routers.LOGIN);
       Navigator.pushNamed(Get.context!, Routers.LOGIN);

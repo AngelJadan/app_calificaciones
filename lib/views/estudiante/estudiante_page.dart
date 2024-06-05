@@ -35,6 +35,8 @@ class EstudiantePage extends GetResponsiveView<EstudianteController> {
             ),
             tooltip: "Inicio",
           ),
+          backgroundColor:
+              MaterialStateColor.resolveWith((states) => Colors.amber),
         ),
         drawer: getDrawer(Get.context!),
         body: Center(

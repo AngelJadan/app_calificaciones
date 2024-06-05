@@ -15,7 +15,6 @@ class DocenteController extends AbstractController<MateriaCursoDocenteService,
   @override
   init() async {
     change(null, status: RxStatus.loading());
-    print("init get cursos");
     await getListCursos();
     change(lists, status: RxStatus.success());
   }

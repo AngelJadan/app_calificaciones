@@ -28,6 +28,8 @@ class DocenteCurso extends StatelessWidget {
             ),
             tooltip: "Inicio",
           ),
+          backgroundColor:
+              MaterialStateColor.resolveWith((states) => Colors.amber),
         ),
         drawer: getDrawer(Get.context!),
         body: Center(
@@ -35,12 +37,33 @@ class DocenteCurso extends StatelessWidget {
             scrollDirection: Axis.vertical,
             child: controller.obx(
               (state) => DataTable(
+                showBottomBorder: true,
+                headingRowColor: MaterialStateColor.resolveWith(
+                    (states) => const Color.fromARGB(255, 5, 100, 178)),
                 columns: const [
                   DataColumn(
-                    label: Text("Curso"),
+                    label: Expanded(
+                      child: Text(
+                        "Curso",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                   DataColumn(
-                    label: Text("Materia"),
+                    label: Expanded(
+                      child: Text(
+                        "Paralelo",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Expanded(
+                      child: Text(
+                        "Materia",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                   DataColumn(label: Text(""))
                 ],
@@ -53,6 +76,7 @@ class DocenteCurso extends StatelessWidget {
                               e.curso!.nombre!.toString(),
                             ),
                           ),
+                          DataCell(Text(e.curso!.paralelo!['nombre'])),
                           DataCell(Text(e.materia!.nombre!)),
                           DataCell(
                             IconButton(
@@ -60,6 +84,7 @@ class DocenteCurso extends StatelessWidget {
                                 Get.offAllNamed(Routers.CURSOESTUDIANTE,
                                     arguments: {"curso": e});
                               },
+                              tooltip: "Ver estudiantes",
                               icon: const Icon(Icons.arrow_forward_ios_sharp),
                             ),
                           )

@@ -13,10 +13,10 @@ menuDocente(BuildContext context) {
     ),
     children: [
       ListTile(
-        leading: const Icon(Icons.person_add),
-        title: const Text('Cursos'),
+        leading: const Icon(Icons.line_style_outlined),
+        title: const Text('Mis cursos'),
         onTap: () {
-          Get.offAllNamed(Routers.CURSO);
+          Get.offAllNamed(Routers.DOCENTEMATERIAS);
         },
       ),
     ],

@@ -33,6 +33,8 @@ class CursoEstudiantePage extends StatelessWidget {
             ),
             tooltip: "Inicio",
           ),
+          backgroundColor:
+              MaterialStateColor.resolveWith((states) => Colors.amber),
         ),
         drawer: getDrawer(Get.context!),
         body: Center(
